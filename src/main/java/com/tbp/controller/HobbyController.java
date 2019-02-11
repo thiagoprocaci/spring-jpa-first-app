@@ -11,30 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HobbyController {
 
-    @Autowired
-    HobbyRepository hobbyRepository;
 
-    @RequestMapping(value = "/hobby/all", method = RequestMethod.GET)
-    public Iterable<Hobby> findAll() {
-        return hobbyRepository.findAll();
-    }
-
-    @RequestMapping(value = "/hobby/save", method = RequestMethod.GET)
-    public Hobby save(@Param("name") String name) {
-        Hobby hobby = new Hobby();
-        hobby.setName(name);
-        Hobby savedHobby = hobbyRepository.save(hobby);
-        return savedHobby;
-    }
-
-    @RequestMapping(value = "/hobby/update", method = RequestMethod.GET)
-    public Hobby update(@Param("name") String name, @Param("id") Long id) {
-        Hobby hobby = hobbyRepository.findOne(id);
-        hobby.setName(name);
-        Hobby savedHobby = hobbyRepository.save(hobby);
-        return savedHobby;
-
-    }
 
 
 }
