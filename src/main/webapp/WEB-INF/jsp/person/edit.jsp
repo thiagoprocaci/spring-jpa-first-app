@@ -21,8 +21,9 @@
         Hobby:
         <select name="idHobby" >
             <c:forEach var="hobby" items="${hobbyList}">
-                <option value="${hobby.id}">${hobby.name}</option>
+                <option value="${hobby.id}" ${hobby.id == person.favoriteHobby.id ? 'selected' : ''}>${hobby.name}</option>
             </c:forEach>
+
         </select>
         <br><br>
         <input type="hidden" name="idPerson" value="${person.id}">
