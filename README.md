@@ -166,12 +166,14 @@ import com.tbp.repository.HobbyRepository;
 import com.tbp.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 
-@RestController
+@Controller
 public class PersonController {
 
     @Autowired
@@ -179,55 +181,74 @@ public class PersonController {
     @Autowired
     HobbyRepository hobbyRepository;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public Person index() {
-        Person person = new Person();
-        person.setName("John");
-        person.setAge(12);
-        Person savedPerson = personRepository.save(person);
-        return savedPerson;
+
+    @RequestMapping(value = "/person/create", method = RequestMethod.GET)
+    public String createPage(Map<String, Object> model) {
+        Iterable<Hobby> hobbies = hobbyRepository.findAll();
+        model.put("hobbyList", hobbies);
+        return "person/create";
     }
 
-    @RequestMapping(value = "/person/all", method = RequestMethod.GET)
-    public Iterable<Person>  findAll() {
-        Iterable<Person> all = personRepository.findAll();
-        return all;
-    }
-
-    @RequestMapping(value = "/person/save", method = RequestMethod.GET)
-    public Person save(@Param("name") String name, @Param("age") Integer age) {
+    @RequestMapping(value = "/person/create", method = RequestMethod.POST)
+    public void save(@Param("name") String name, @Param("age") Integer age, @Param("idHobby") Long idHobby,
+                     Map<String, Object> model) {
+        Hobby hobby = hobbyRepository.findOne(idHobby);
         Person person = new Person();
         person.setName(name);
         person.setAge(age);
+        person.setFavoriteHobby(hobby);
         personRepository.save(person);
-        return person;
+
+        Iterable<Hobby> hobbies = hobbyRepository.findAll();
+        model.put("hobbyList", hobbies);
+        model.put("message", "Person " + name + " created");
     }
 
-    @RequestMapping(value = "/person/update", method = RequestMethod.GET)
-    public Person update(@Param("name") String name, @Param("age") Integer age, @Param("id") Long id) {
+
+    @RequestMapping(value = "/person/list", method = RequestMethod.GET)
+    public String listPage(Map<String, Object> model) {
+        Iterable<Person> personList = personRepository.findAll();
+        model.put("personList", personList);
+        return "person/list";
+    }
+
+    @RequestMapping(value = "/person/edit", method = RequestMethod.GET)
+    public String editPage(@Param("id") Long id, Map<String, Object> model) {
         Person person = personRepository.findOne(id);
-        person.setName(name);
-        person.setAge(age);
-        personRepository.save(person);
-        return person;
+        model.put("person", person);
+
+        Iterable<Hobby> hobbies = hobbyRepository.findAll();
+        model.put("hobbyList", hobbies);
+        return "person/edit";
     }
 
-    @RequestMapping(value = "/person/remove", method = RequestMethod.GET)
-    public String remove(@Param("id") Long id) {
-        personRepository.delete(id);
-        return "Person with id = " + id + " removed";
-    }
 
-    @RequestMapping(value = "/person/addHobby", method = RequestMethod.GET)
-    public Person addHobby(@Param("idPerson") Long idPerson, @Param("idHobby") Long idHobby) {
+    @RequestMapping(value = "/person/edit", method = RequestMethod.POST)
+    public void update(@Param("name") String name, @Param("age") Integer age,
+                         @Param("idPerson") Long idPerson, @Param("idHobby") Long idHobby,
+                       Map<String, Object> model) {
         Hobby hobby = hobbyRepository.findOne(idHobby);
         Person person = personRepository.findOne(idPerson);
+        person.setName(name);
+        person.setAge(age);
         person.setFavoriteHobby(hobby);
-        return personRepository.save(person);
+        personRepository.save(person);
+
+
+        Iterable<Hobby> hobbies = hobbyRepository.findAll();
+        model.put("hobbyList", hobbies);
+        model.put("person", person);
+        model.put("message", "Person " + name + " edited");
     }
 
+    @RequestMapping(value = "person/delete", method = RequestMethod.GET)
+    public String delete(@Param("id") Long id) {
+        personRepository.delete(id);
+        return "redirect:/person/list";
+    }
 
 }
+
 
 
 
@@ -243,36 +264,53 @@ import com.tbp.model.Hobby;
 import com.tbp.repository.HobbyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+import java.util.Map;
+
+
+@Controller
 public class HobbyController {
 
     @Autowired
     HobbyRepository hobbyRepository;
 
-    @RequestMapping(value = "/hobby/all", method = RequestMethod.GET)
-    public Iterable<Hobby> findAll() {
-        return hobbyRepository.findAll();
+    @RequestMapping(value = "hobby/create", method = RequestMethod.GET)
+    public String createPage() {
+        return "hobby/create";
     }
 
-    @RequestMapping(value = "/hobby/save", method = RequestMethod.GET)
-    public Hobby save(@Param("name") String name) {
+    @RequestMapping(value = "hobby/list", method = RequestMethod.GET)
+    public String listPage(Map<String, Object> model) {
+        Iterable<Hobby> all = hobbyRepository.findAll();
+        model.put("hobbyList", all);
+        return "hobby/list";
+    }
+
+    @RequestMapping(value = "hobby/edit", method = RequestMethod.GET)
+    public String editPage(@Param("id") Long id, Map<String, Object> model) {
+        Hobby hobby = hobbyRepository.findOne(id);
+        model.put("hobby", hobby);
+        return "hobby/edit";
+
+    }
+
+    @RequestMapping(value = "/hobby/create", method = RequestMethod.POST)
+    public void create(@Param("name") String name, Map<String, Object> model) {
         Hobby hobby = new Hobby();
         hobby.setName(name);
-        Hobby savedHobby = hobbyRepository.save(hobby);
-        return savedHobby;
+        hobbyRepository.save(hobby);
+        model.put("message", "Hobby " + name + " created");
     }
 
-    @RequestMapping(value = "/hobby/update", method = RequestMethod.GET)
-    public Hobby update(@Param("name") String name, @Param("id") Long id) {
+    @RequestMapping(value = "/hobby/edit", method = RequestMethod.POST)
+    public void update(@Param("name") String name, @Param("id") Long id, Map<String, Object> model) {
         Hobby hobby = hobbyRepository.findOne(id);
         hobby.setName(name);
-        Hobby savedHobby = hobbyRepository.save(hobby);
-        return savedHobby;
-
+        hobbyRepository.save(hobby);
+        model.put("message", "Hobby " + name + " edited");
     }
 
 
@@ -280,6 +318,31 @@ public class HobbyController {
 
 
 ```
+
+### IndexController
+
+```
+package com.tbp.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class IndexController {
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String index() {
+        return "index";
+    }
+
+
+}
+
+
+```
+
+## Properties
 
 ### application.properties
 
@@ -292,7 +355,7 @@ spring.h2.console.path=/h2
 #Configuracoes do banco de dados
 
 # url de conexao com o banco de dados
-spring.datasource.url=jdbc:h2:file:~/test;DB_CLOSE_ON_EXIT=FALSE
+spring.datasource.url=jdbc:h2:file:~/test2;DB_CLOSE_ON_EXIT=FALSE
 
 # nome do usuario do banco
 spring.datasource.username=sa
@@ -309,5 +372,313 @@ spring.jpa.hibernate.ddl-auto=update
 
 #contexto da aplicacao
 server.context-path=/jpa-app
+
+
+spring.mvc.view.prefix=/WEB-INF/jsp/
+spring.mvc.view.suffix=.jsp
+
+```
+
+## JSP
+
+### hobby/create.jsp
+
+```
+<%@ page import ="java.util.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html>
+<body>
+<center>
+    <h1>
+         Create Hobby
+    </h1>
+
+     ${message}
+
+    <br><br>
+    <form method="post" action="<%=request.getContextPath()%>/hobby/create">
+        Name:
+
+        <input type="text" name="name"  >
+
+        <br><br>
+
+        <input type="submit" value="Save" />
+    </form>
+
+     <br><br>
+     <a href="<%=request.getContextPath()%>/hobby/list">Hobby List</a>
+
+</center>
+</body>
+</html>
+
+```
+
+### hobby/edit.jsp
+
+```
+<%@ page import ="java.util.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html>
+<body>
+<center>
+    <h1>
+         Edit Hobby
+    </h1>
+
+     ${message}
+
+    <br><br>
+    <form method="post" action="<%=request.getContextPath()%>/hobby/edit">
+        Name:
+
+        <input type="text" name="name" value="${hobby.name}"  >
+
+        <br><br>
+        <input type="hidden" name="id" value="${hobby.id}"  >
+
+        <input type="submit" value="Save" />
+    </form>
+
+     <br><br>
+     <a href="<%=request.getContextPath()%>/hobby/list">Hobby List</a>
+
+
+</center>
+</body>
+</html>
+
+```
+
+### hobby/list.jsp
+
+```
+<%@ page import ="java.util.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html>
+<html>
+<body>
+<center>
+    <h1>
+        Hobby List
+    </h1>
+
+
+    <table>
+     <tr>
+        <th>
+            Edit
+        </th>
+        <th>
+            Id
+        </th>
+        <th>
+            Name
+        </th>
+      </tr>
+      <c:forEach var="hobby" items="${hobbyList}">
+       <tr>
+            <td>
+                <a href="<%=request.getContextPath()%>/hobby/edit?id=${hobby.id}">Edit</a>
+            </td>
+            <td>
+                <c:out value="${hobby.id}" />
+            </td>
+            <td>
+                <c:out value="${hobby.name}" />
+            </td>
+        </tr>
+      </c:forEach>
+     </table>
+
+      <br><br>
+      <a href="<%=request.getContextPath()%>/hobby/create">Add Hobby</a>
+      <br><br>
+       <a href="<%=request.getContextPath()%>/person/list">Person List</a>
+</center>
+</body>
+</html>
+
+```
+
+### person/create.jsp
+
+```
+<%@ page import ="java.util.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html>
+<body>
+<center>
+    <h1>
+         Create Person
+    </h1>
+
+    ${message}
+    <br><br>
+    <form method="post" action="<%=request.getContextPath()%>/person/create">
+        Name:
+
+        <input type="text" name="name"  >
+        <br><br>
+        Age:
+        <input type="number" name="age" >
+        <br><br>
+        Hobby:
+        <select name="idHobby">
+            <c:forEach var="hobby" items="${hobbyList}">
+                <option value="${hobby.id}">${hobby.name}</option>
+            </c:forEach>
+        </select>
+        <br><br>
+        <input type="submit" value="Save" />
+    </form>
+
+    <br><br>
+    <a href="<%=request.getContextPath()%>/person/list">Person List</a>
+
+</center>
+</body>
+</html>
+
+```
+
+### person/edit.jsp
+
+```
+<%@ page import ="java.util.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html>
+<body>
+<center>
+    <h1>
+         Edit Person
+    </h1>
+
+    ${message}
+    <br><br>
+    <form method="post" action="<%=request.getContextPath()%>/person/edit">
+        Name:
+
+        <input type="text" name="name"  value="${person.name}">
+        <br><br>
+        Age:
+        <input type="number" name="age" value="${person.age}">
+        <br><br>
+        Hobby:
+        <select name="idHobby" >
+            <c:forEach var="hobby" items="${hobbyList}">
+                <option value="${hobby.id}" ${hobby.id == person.favoriteHobby.id ? 'selected' : ''}>${hobby.name}</option>
+            </c:forEach>
+
+        </select>
+        <br><br>
+        <input type="hidden" name="idPerson" value="${person.id}">
+        <input type="submit" value="Save" />
+    </form>
+
+    <br><br>
+    <a href="<%=request.getContextPath()%>/person/list">Person List</a>
+
+
+</center>
+</body>
+</html>
+
+```
+
+### person/list.jsp
+
+```
+<%@ page import ="java.util.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html>
+<html>
+<body>
+<center>
+    <h1>
+        Person List
+    </h1>
+
+
+    <table>
+     <tr>
+        <th>
+            Edit
+        </th>
+         <th>
+            Delete
+        </th>
+        <th>
+            Id
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Age
+        </th>
+        <th>
+            Favorite Hobby
+        </th>
+      </tr>
+      <c:forEach var="person" items="${personList}">
+       <tr>
+            <td>
+                <a href="<%=request.getContextPath()%>/person/edit?id=${person.id}">Edit</a>
+            </td>
+            <td>
+                <a href="<%=request.getContextPath()%>/person/delete?id=${person.id}">Delete</a>
+            </td>
+            <td>
+                ${person.id}
+            </td>
+            <td>
+                ${person.name}
+            </td>
+            <td>
+                ${person.age}
+            </td>
+            <td>
+                ${person.favoriteHobby.name}
+            </td>
+        </tr>
+      </c:forEach>
+     </table>
+
+      <br><br>
+
+      <a href="<%=request.getContextPath()%>/person/create">Add Person</a>
+
+       <br><br>
+       <a href="<%=request.getContextPath()%>/hobby/list">Hobby List</a>
+
+</center>
+</body>
+</html>
+
+```
+
+### index.jsp
+
+```
+<html>
+   <head>
+        <meta charset="UTF-8">
+    </head>
+
+    <body>
+               <br><br>
+               <a href="<%=request.getContextPath()%>/hobby/create">Add Hobby</a>
+               <br><br>
+                <a href="<%=request.getContextPath()%>/person/list">Person List</a>
+    </body>
+</html>
 
 ```
