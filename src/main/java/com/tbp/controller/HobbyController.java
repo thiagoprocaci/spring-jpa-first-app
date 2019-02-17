@@ -3,9 +3,10 @@ package com.tbp.controller;
 import com.tbp.model.Hobby;
 import com.tbp.repository.HobbyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,7 +21,7 @@ public class HobbyController {
     }
 
     @RequestMapping(value = "/hobby/save", method = RequestMethod.GET)
-    public Hobby save(@Param("name") String name) {
+    public Hobby save(@RequestParam("name") String name) {
         Hobby hobby = new Hobby();
         hobby.setName(name);
         Hobby savedHobby = hobbyRepository.save(hobby);
@@ -28,7 +29,7 @@ public class HobbyController {
     }
 
     @RequestMapping(value = "/hobby/update", method = RequestMethod.GET)
-    public Hobby update(@Param("name") String name, @Param("id") Long id) {
+    public Hobby update(@RequestParam("name") String name, @RequestParam("id") Long id) {
         Hobby hobby = hobbyRepository.findOne(id);
         hobby.setName(name);
         Hobby savedHobby = hobbyRepository.save(hobby);

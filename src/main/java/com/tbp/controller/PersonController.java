@@ -5,9 +5,9 @@ import com.tbp.model.Person;
 import com.tbp.repository.HobbyRepository;
 import com.tbp.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -35,7 +35,7 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/person/save", method = RequestMethod.GET)
-    public Person save(@Param("name") String name, @Param("age") Integer age) {
+    public Person save(@RequestParam("name") String name, @RequestParam("age") Integer age) {
         Person person = new Person();
         person.setName(name);
         person.setAge(age);
@@ -44,7 +44,7 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/person/update", method = RequestMethod.GET)
-    public Person update(@Param("name") String name, @Param("age") Integer age, @Param("id") Long id) {
+    public Person update(@RequestParam("name") String name, @RequestParam("age") Integer age, @RequestParam("id") Long id) {
         Person person = personRepository.findOne(id);
         person.setName(name);
         person.setAge(age);
@@ -53,13 +53,13 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/person/remove", method = RequestMethod.GET)
-    public String remove(@Param("id") Long id) {
+    public String remove(@RequestParam("id") Long id) {
         personRepository.delete(id);
         return "Person with id = " + id + " removed";
     }
 
     @RequestMapping(value = "/person/addHobby", method = RequestMethod.GET)
-    public Person addHobby(@Param("idPerson") Long idPerson, @Param("idHobby") Long idHobby) {
+    public Person addHobby(@RequestParam("idPerson") Long idPerson, @RequestParam("idHobby") Long idHobby) {
         Hobby hobby = hobbyRepository.findOne(idHobby);
         Person person = personRepository.findOne(idPerson);
         person.setFavoriteHobby(hobby);
