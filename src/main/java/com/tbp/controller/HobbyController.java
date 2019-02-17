@@ -22,6 +22,14 @@ public class HobbyController {
         return "hobby/create";
     }
 
+    @RequestMapping(value = "/hobby/create", method = RequestMethod.POST)
+    public void create(@Param("name") String name, Map<String, Object> model) {
+        Hobby hobby = new Hobby();
+        hobby.setName(name);
+        hobbyRepository.save(hobby);
+        model.put("message", "Hobby " + name + " created");
+    }
+
     @RequestMapping(value = "hobby/list", method = RequestMethod.GET)
     public String listPage(Map<String, Object> model) {
         Iterable<Hobby> all = hobbyRepository.findAll();
@@ -37,19 +45,12 @@ public class HobbyController {
 
     }
 
-    @RequestMapping(value = "/hobby/create", method = RequestMethod.POST)
-    public void create(@Param("name") String name, Map<String, Object> model) {
-        Hobby hobby = new Hobby();
-        hobby.setName(name);
-        hobbyRepository.save(hobby);
-        model.put("message", "Hobby " + name + " created");
-    }
-
     @RequestMapping(value = "/hobby/edit", method = RequestMethod.POST)
     public void update(@Param("name") String name, @Param("id") Long id, Map<String, Object> model) {
         Hobby hobby = hobbyRepository.findOne(id);
         hobby.setName(name);
         hobbyRepository.save(hobby);
+        model.put("hobby", hobby);
         model.put("message", "Hobby " + name + " edited");
     }
 
