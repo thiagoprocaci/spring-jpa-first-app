@@ -3,10 +3,10 @@ package com.tbp.controller;
 import com.tbp.model.Hobby;
 import com.tbp.repository.HobbyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -23,7 +23,7 @@ public class HobbyController {
     }
 
     @RequestMapping(value = "/hobby/create", method = RequestMethod.POST)
-    public void create(@Param("name") String name, Map<String, Object> model) {
+    public void create(@RequestParam("name") String name, Map<String, Object> model) {
         Hobby hobby = new Hobby();
         hobby.setName(name);
         hobbyRepository.save(hobby);
@@ -38,7 +38,7 @@ public class HobbyController {
     }
 
     @RequestMapping(value = "hobby/edit", method = RequestMethod.GET)
-    public String editPage(@Param("id") Long id, Map<String, Object> model) {
+    public String editPage(@RequestParam("id") Long id, Map<String, Object> model) {
         Hobby hobby = hobbyRepository.findOne(id);
         model.put("hobby", hobby);
         return "hobby/edit";
@@ -46,7 +46,7 @@ public class HobbyController {
     }
 
     @RequestMapping(value = "/hobby/edit", method = RequestMethod.POST)
-    public void update(@Param("name") String name, @Param("id") Long id, Map<String, Object> model) {
+    public void update(@RequestParam("name") String name, @RequestParam("id") Long id, Map<String, Object> model) {
         Hobby hobby = hobbyRepository.findOne(id);
         hobby.setName(name);
         hobbyRepository.save(hobby);

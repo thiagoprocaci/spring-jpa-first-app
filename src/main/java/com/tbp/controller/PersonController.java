@@ -5,10 +5,10 @@ import com.tbp.model.Person;
 import com.tbp.repository.HobbyRepository;
 import com.tbp.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -30,7 +30,7 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/person/create", method = RequestMethod.POST)
-    public void save(@Param("name") String name, @Param("age") Integer age, @Param("idHobby") Long idHobby,
+    public void save(@RequestParam("name") String name, @RequestParam("age") Integer age, @RequestParam("idHobby") Long idHobby,
                      Map<String, Object> model) {
         Hobby hobby = hobbyRepository.findOne(idHobby);
         Person person = new Person();
@@ -53,7 +53,7 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/person/edit", method = RequestMethod.GET)
-    public String editPage(@Param("id") Long id, Map<String, Object> model) {
+    public String editPage(@RequestParam("id") Long id, Map<String, Object> model) {
         Person person = personRepository.findOne(id);
         model.put("person", person);
 
@@ -64,8 +64,8 @@ public class PersonController {
 
 
     @RequestMapping(value = "/person/edit", method = RequestMethod.POST)
-    public void update(@Param("name") String name, @Param("age") Integer age,
-                         @Param("idPerson") Long idPerson, @Param("idHobby") Long idHobby,
+    public void update(@RequestParam("name") String name, @RequestParam("age") Integer age,
+                         @RequestParam("idPerson") Long idPerson, @RequestParam("idHobby") Long idHobby,
                        Map<String, Object> model) {
         Hobby hobby = hobbyRepository.findOne(idHobby);
         Person person = personRepository.findOne(idPerson);
@@ -82,7 +82,7 @@ public class PersonController {
     }
 
     @RequestMapping(value = "person/delete", method = RequestMethod.GET)
-    public String delete(@Param("id") Long id) {
+    public String delete(@RequestParam("id") Long id) {
         personRepository.delete(id);
         return "redirect:/person/list";
     }
