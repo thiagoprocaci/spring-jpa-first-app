@@ -36,5 +36,11 @@ public class HobbyController {
         hobbyRepository.delete(hobby.getId());
     }
 
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public Hobby getById(@PathVariable Long id) {
+        Hobby hobby = hobbyRepository.findOne(id);
+        return hobby;
+    }
+
 
 }

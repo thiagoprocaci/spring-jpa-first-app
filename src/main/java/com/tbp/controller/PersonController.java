@@ -1,6 +1,5 @@
 package com.tbp.controller;
 
-import com.tbp.model.Hobby;
 import com.tbp.model.Person;
 import com.tbp.repository.HobbyRepository;
 import com.tbp.repository.PersonRepository;
@@ -14,8 +13,6 @@ public class PersonController {
 
     @Autowired
     PersonRepository personRepository;
-    @Autowired
-    HobbyRepository hobbyRepository;
 
 
     @RequestMapping(method = RequestMethod.GET)
@@ -39,5 +36,11 @@ public class PersonController {
     @RequestMapping(method = RequestMethod.DELETE)
     public void remove(@RequestBody Person person) {
         personRepository.delete(person.getId());
+    }
+
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public Person getById(@PathVariable Long id) {
+        Person person = personRepository.findOne(id);
+        return person;
     }
 }
