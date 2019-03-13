@@ -17,6 +17,27 @@ public class Person {
     @JoinColumn(name = "id_passatempo")
     Hobby favoriteHobby;
 
+    @Column(name = "senha")
+    String password;
+    @Column(name = "username", unique = true)
+    String username;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public Long getId() {
         return id;
     }

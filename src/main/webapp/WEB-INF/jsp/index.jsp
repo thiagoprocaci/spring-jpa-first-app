@@ -11,5 +11,7 @@
                <a href="<%=request.getContextPath()%>/hobby/create">Add Hobby</a>
                <br><br>
                 <a href="<%=request.getContextPath()%>/person/list">Person List</a>
+                  <br><br>
+                <a href="<%=request.getContextPath()%>/login/logout">Logout</a>
     </body>
 </html>

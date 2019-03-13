@@ -29,7 +29,8 @@
 
      <br><br>
      <a href="<%=request.getContextPath()%>/hobby/list">Hobby List</a>
-
+     <br><br>
+     <a href="<%=request.getContextPath()%>/login/logout">Logout</a>
 
 </center>
 </body>

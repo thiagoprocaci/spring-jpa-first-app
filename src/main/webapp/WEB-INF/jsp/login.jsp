@@ -10,27 +10,22 @@
 <body>
 <center>
     <h1>
-         Create Hobby
+         Login
     </h1>
 
-     ${message}
-
+    ${message}
     <br><br>
-    <form method="post" action="<%=request.getContextPath()%>/hobby/create">
-        Name:
-
-        <input type="text" name="name"  >
-
+    <form method="post" action="<%=request.getContextPath()%>/login/doLogin">
+        Username:
+        <input type="text" name="username"  >
         <br><br>
-
-        <input type="submit" value="Save" />
+        Password:
+        <input type="password" name="password"  >
+        <br><br>
+        <input type="submit" value="Login" />
     </form>
-
-     <br><br>
-     <a href="<%=request.getContextPath()%>/hobby/list">Hobby List</a>
-
-     <br><br>
-     <a href="<%=request.getContextPath()%>/login/logout">Logout</a>
+    <br><br>
+    <a href="<%=request.getContextPath()%>/person/create">Person Create</a>
 </center>
 </body>
 </html>

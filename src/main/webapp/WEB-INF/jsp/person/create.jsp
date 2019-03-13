@@ -20,6 +20,17 @@
 
         <input type="text" name="name"  >
         <br><br>
+
+        Username:
+
+        <input type="text" name="username"  >
+        <br><br>
+
+        Password:
+
+        <input type="text" name="password"  >
+        <br><br>
+
         Age:
         <input type="number" name="age" >
         <br><br>
@@ -30,11 +41,10 @@
             </c:forEach>
         </select>
         <br><br>
+
         <input type="submit" value="Save" />
     </form>
 
-    <br><br>
-    <a href="<%=request.getContextPath()%>/person/list">Person List</a>
 
 </center>
 </body>

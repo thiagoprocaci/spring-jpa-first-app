@@ -30,13 +30,20 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/person/create", method = RequestMethod.POST)
-    public void save(@RequestParam("name") String name, @RequestParam("age") Integer age, @RequestParam("idHobby") Long idHobby,
+    public void save(@RequestParam("name") String name,
+                     @RequestParam("age") Integer age,
+                     @RequestParam(value = "idHobby", required = false) Long idHobby,
+                     @RequestParam("username") String username,
+                     @RequestParam("password") String password,
                      Map<String, Object> model) {
+
         Hobby hobby = hobbyRepository.findOne(idHobby);
         Person person = new Person();
         person.setName(name);
         person.setAge(age);
         person.setFavoriteHobby(hobby);
+        person.setPassword(password);
+        person.setUsername(username);
         personRepository.save(person);
 
         Iterable<Hobby> hobbies = hobbyRepository.findAll();
