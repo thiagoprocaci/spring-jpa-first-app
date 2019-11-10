@@ -16,6 +16,9 @@ public class Person {
     @ManyToOne
     @JoinColumn(name = "id_passatempo")
     Hobby favoriteHobby;
+    @ManyToOne
+    @JoinColumn(name = "id_pais")
+    Country country;
 
     public Long getId() {
         return id;
@@ -47,5 +50,13 @@ public class Person {
 
     public void setFavoriteHobby(Hobby favoriteHobby) {
         this.favoriteHobby = favoriteHobby;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 }

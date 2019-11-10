@@ -34,6 +34,9 @@
         <th>
             Favorite Hobby
         </th>
+         <th>
+             Country
+         </th>
       </tr>
       <c:forEach var="person" items="${personList}">
        <tr>
@@ -55,6 +58,9 @@
             <td>
                 ${person.favoriteHobby.name}
             </td>
+           <td>
+                   ${person.country.name}
+           </td>
         </tr>
       </c:forEach>
      </table>

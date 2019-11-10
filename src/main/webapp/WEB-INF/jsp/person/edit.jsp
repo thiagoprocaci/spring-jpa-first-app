@@ -31,6 +31,14 @@
 
         </select>
         <br><br>
+        Country:
+        <select name="idCountry" >
+            <c:forEach var="country" items="${countryList}">
+                <option value="${country.id}" ${country.id == person.country.id ? 'selected' : ''}>${country.name}</option>
+            </c:forEach>
+
+        </select>
+        <br><br>
         <input type="hidden" name="idPerson" value="${person.id}">
         <input type="submit" value="Save" />
     </form>
