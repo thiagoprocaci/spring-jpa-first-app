@@ -31,7 +31,7 @@ public class ProfessorController {
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String create(@RequestParam("nome") String nome,
                          @RequestParam("formacao") String formacao,
-                         @RequestParam("idDisciplinas") Long[] idDisciplinas) {
+                         @RequestParam(value = "idDisciplinas", required = false) Long[] idDisciplinas) {
         // primeiro, salvamos o professor
         Professor professor = new Professor();
         professor.setFormacao(formacao);
