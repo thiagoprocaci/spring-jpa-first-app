@@ -1,7 +1,5 @@
 package com.tbp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -21,7 +19,7 @@ public class Turma  {
     @OneToMany(mappedBy = "turma")
     Set<Aluno> alunos = new HashSet<Aluno>();
     @OneToMany(mappedBy = "turma")
-    Set<Alocacao> alocacaos = new HashSet<Alocacao>();
+    Set<Alocacao> alocacaoSet = new HashSet<Alocacao>();
 
     public Long getId() {
         return id;
@@ -45,6 +43,14 @@ public class Turma  {
 
     public void setAlunos(Set<Aluno> alunos) {
         this.alunos = alunos;
+    }
+
+    public Set<Alocacao> getAlocacaoSet() {
+        return alocacaoSet;
+    }
+
+    public void setAlocacaoSet(Set<Alocacao> alocacaoSet) {
+        this.alocacaoSet = alocacaoSet;
     }
 }
 
