@@ -27,7 +27,10 @@
                     Formação
                 </th>
                 <th>
-                    Disciplinas
+                    Especialista em
+                </th>
+                <th>
+                    Alocações
                 </th>
             </tr>
             <c:forEach var="professor" items="${professorList}">
@@ -45,7 +48,11 @@
                         <c:forEach var="disciplina" items="${professor.disciplinas}">
                             ${disciplina.nome} <br>
                         </c:forEach>
-
+                    </td>
+                    <td>
+                        <c:forEach var="alocacao" items="${professor.alocacoes}">
+                            ${alocacao.turma.descricao}, ${alocacao.disciplina.nome}, ${alocacao.horario} <br>
+                        </c:forEach>
                     </td>
                 </tr>
             </c:forEach>

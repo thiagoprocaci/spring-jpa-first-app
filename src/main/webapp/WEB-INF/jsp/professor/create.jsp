@@ -24,7 +24,7 @@
                 <input type="text" class="form-control" name="formacao" id="formacao"  placeholder="Entre com o formação do professor">
             </div>
             <div class="form-group">
-                <label for="idDisciplinas">Disciplinas</label>
+                <label for="idDisciplinas">Especializado nas disciplinas</label>
                 <select class="form-control" name="idDisciplinas" id="idDisciplinas" multiple>
                     <c:forEach var="disciplina" items="${disciplinaList}">
                         <option value="${disciplina.id}">${disciplina.nome}</option>

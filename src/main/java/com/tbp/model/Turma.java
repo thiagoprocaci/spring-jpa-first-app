@@ -19,7 +19,7 @@ public class Turma  {
     @OneToMany(mappedBy = "turma")
     Set<Aluno> alunos = new HashSet<Aluno>();
     @OneToMany(mappedBy = "turma")
-    Set<Alocacao> alocacaoSet = new HashSet<Alocacao>();
+    Set<Alocacao> alocacoes = new HashSet<Alocacao>();
 
     public Long getId() {
         return id;
@@ -45,12 +45,12 @@ public class Turma  {
         this.alunos = alunos;
     }
 
-    public Set<Alocacao> getAlocacaoSet() {
-        return alocacaoSet;
+    public Set<Alocacao> getAlocacoes() {
+        return alocacoes;
     }
 
-    public void setAlocacaoSet(Set<Alocacao> alocacaoSet) {
-        this.alocacaoSet = alocacaoSet;
+    public void setAlocacoes(Set<Alocacao> alocacoes) {
+        this.alocacoes = alocacoes;
     }
 }
 

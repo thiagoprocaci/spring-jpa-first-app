@@ -2,7 +2,7 @@ package com.tbp.model;
 
 import javax.persistence.*;
 
-import java.util.Date;
+
 
 @Entity
 @Table(name = "alocacao")
@@ -18,9 +18,12 @@ public class Alocacao {
     @ManyToOne
     @JoinColumn(name = "id_turma")
     Turma turma;
-    @Temporal(TemporalType.TIMESTAMP)
+    @ManyToOne
+    @JoinColumn(name = "id_disciplina")
+    Disciplina disciplina;
+
     @Column(name = "horario")
-    Date horario;
+    String horario;
 
     public Long getId() {
         return id;
@@ -46,11 +49,19 @@ public class Alocacao {
         this.turma = turma;
     }
 
-    public Date getHorario() {
+    public String getHorario() {
         return horario;
     }
 
-    public void setHorario(Date horario) {
+    public void setHorario(String horario) {
         this.horario = horario;
+    }
+
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
     }
 }

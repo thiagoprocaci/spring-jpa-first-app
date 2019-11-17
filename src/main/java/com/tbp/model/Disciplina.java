@@ -20,6 +20,8 @@ public class Disciplina implements Serializable {
             joinColumns = { @JoinColumn(name = "iddisciplina") },
             inverseJoinColumns = { @JoinColumn(name = "idprofessor") })
     Set<Professor> professores = new HashSet<Professor>();
+    @OneToMany(mappedBy = "disciplina")
+    Set<Alocacao> alocacoes = new HashSet<Alocacao>();
 
     public Long getId() {
         return id;
@@ -43,5 +45,13 @@ public class Disciplina implements Serializable {
 
     public void setProfessores(Set<Professor> professores) {
         this.professores = professores;
+    }
+
+    public Set<Alocacao> getAlocacoes() {
+        return alocacoes;
+    }
+
+    public void setAlocacoes(Set<Alocacao> alocacoes) {
+        this.alocacoes = alocacoes;
     }
 }

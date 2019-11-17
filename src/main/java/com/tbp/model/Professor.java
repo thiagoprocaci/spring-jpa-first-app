@@ -18,7 +18,7 @@ public class Professor extends Pessoa  {
     Set<Disciplina> disciplinas = new HashSet<Disciplina>();
 
     @OneToMany(mappedBy = "professor")
-    Set<Alocacao> alocacaoSet = new HashSet<Alocacao>();
+    Set<Alocacao> alocacoes = new HashSet<Alocacao>();
 
     public String getFormacao() {
         return formacao;
@@ -36,11 +36,11 @@ public class Professor extends Pessoa  {
         this.disciplinas = disciplinas;
     }
 
-    public Set<Alocacao> getAlocacaoSet() {
-        return alocacaoSet;
+    public Set<Alocacao> getAlocacoes() {
+        return alocacoes;
     }
 
-    public void setAlocacaoSet(Set<Alocacao> alocacaoSet) {
-        this.alocacaoSet = alocacaoSet;
+    public void setAlocacoes(Set<Alocacao> alocacoes) {
+        this.alocacoes = alocacoes;
     }
 }
