@@ -31,12 +31,7 @@ public class AlocacaoController {
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String createPage(Map<String, Object> model) {
-        Iterable<Professor> professorList = professorRepository.findAll();
-        Iterable<Turma> turmaList = turmaRepository.findAll();
-        Iterable<Disciplina> disciplinaList = disciplinaRepository.findAll();
-        model.put("professorList", professorList);
-        model.put("turmaList", turmaList);
-        model.put("disciplinaList", disciplinaList);
+
         return "alocacao/create";
     }
 
@@ -46,15 +41,7 @@ public class AlocacaoController {
                          @RequestParam("idDisciplina") Long idDisciplina,
                          @RequestParam("horario") String horario
                          ) {
-        Turma turma = turmaRepository.findOne(idTurma);
-        Professor professor = professorRepository.findOne(idProfessor);
-        Disciplina disciplina = disciplinaRepository.findOne(idDisciplina);
-        Alocacao alocacao = new Alocacao();
-        alocacao.setHorario(horario);
-        alocacao.setProfessor(professor);
-        alocacao.setTurma(turma);
-        alocacao.setDisciplina(disciplina);
-        alocacaoRepository.save(alocacao);
+
         return "redirect:/professor/list";
     }
 

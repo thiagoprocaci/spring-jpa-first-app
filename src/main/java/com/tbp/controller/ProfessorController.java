@@ -23,8 +23,7 @@ public class ProfessorController {
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String createPage(Map<String, Object> model) {
-        Iterable<Disciplina> all = disciplinaRepository.findAll();
-        model.put("disciplinaList", all);
+
         return "professor/create";
     }
 
@@ -32,31 +31,14 @@ public class ProfessorController {
     public String create(@RequestParam("nome") String nome,
                          @RequestParam("formacao") String formacao,
                          @RequestParam(value = "idDisciplinas", required = false) Long[] idDisciplinas) {
-        // primeiro, salvamos o professor
-        Professor professor = new Professor();
-        professor.setFormacao(formacao);
-        professor.setNome(nome);
-        professor = professorRepository.save(professor);
 
-        // depois configuramos a disciplina
-        if(idDisciplinas != null) {
-            for(Long idDisciplina : idDisciplinas) {
-                Disciplina disciplina = disciplinaRepository.findOne(idDisciplina);
-                if(disciplina != null) {
-                    professor.getDisciplinas().add(disciplina);
-                }
-            }
-        }
-        // atualiza professor com as disciplinas
-        professorRepository.save(professor);
         return "redirect:/professor/list";
     }
 
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String listPage(Map<String, Object> model) {
-        Iterable<Professor> all = professorRepository.findAll();
-        model.put("professorList", all);
+
         return "professor/list";
     }
 

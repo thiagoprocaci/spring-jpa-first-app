@@ -24,16 +24,13 @@ public class TurmaController {
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String save(@RequestParam("descricao") String descricao) {
-        Turma turma = new Turma();
-        turma.setDescricao(descricao);
-        turmaRepository.save(turma);
+
         return "redirect:/turma/list";
     }
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String listPage(Map<String, Object> model) {
-        Iterable<Turma> all = turmaRepository.findAll();
-        model.put("turmaList", all);
+
         return "turma/list";
     }
 

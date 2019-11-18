@@ -25,16 +25,13 @@ public class DisciplinaController {
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String save(@RequestParam("nome") String nome) {
-        Disciplina disciplina = new Disciplina();
-        disciplina.setNome(nome);
-        disciplinaRepository.save(disciplina);
+
         return "redirect:/disciplina/list";
     }
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String listPage(Map<String, Object> model) {
-        Iterable<Disciplina> all = disciplinaRepository.findAll();
-        model.put("disciplinaList", all);
+
         return "disciplina/list";
     }
 
