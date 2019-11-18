@@ -1,13 +1,13 @@
 package com.tbp.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
+
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "disciplina")
-public class Disciplina implements Serializable {
+public class Disciplina  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
