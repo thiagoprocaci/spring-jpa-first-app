@@ -20,4 +20,5 @@ CREATE TABLE myDB.pais (
   PRIMARY KEY (`id`)
 )
 
+ALTER TABLE `myDB`.pessoa ADD id_pais MEDIUMINT NULL;
 alter table myDB.pessoa add CONSTRAINT pais_fk FOREIGN KEY (id_pais)  REFERENCES myDB.pais(id)
