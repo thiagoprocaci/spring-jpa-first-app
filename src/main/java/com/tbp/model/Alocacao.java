@@ -2,6 +2,7 @@ package com.tbp.model;
 
 import javax.persistence.*;
 
+import java.util.Date;
 
 
 @Entity
@@ -22,8 +23,9 @@ public class Alocacao {
     @JoinColumn(name = "id_disciplina")
     Disciplina disciplina;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "horario")
-    String horario;
+    Date horario;
 
     public Long getId() {
         return id;
@@ -49,11 +51,11 @@ public class Alocacao {
         this.turma = turma;
     }
 
-    public String getHorario() {
+    public Date getHorario() {
         return horario;
     }
 
-    public void setHorario(String horario) {
+    public void setHorario(Date horario) {
         this.horario = horario;
     }
 

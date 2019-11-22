@@ -20,8 +20,12 @@
     <div>
         <form method="post" action="<%=request.getContextPath()%>/alocacao/create">
             <div class="form-group">
+                <label for="dia">Dia</label>
+                <input type="date" class="form-control" name="dia" id="dia"  placeholder="Entre com o dia da alocação">
+            </div>
+            <div class="form-group">
                 <label for="horario">Horário</label>
-                <input type="text" class="form-control" name="horario" id="horario"  placeholder="Entre com o horário da alocação">
+                <input type="time" class="form-control" name="horario" id="horario"  placeholder="Entre com o horário da alocação">
             </div>
 
             <div class="form-group">
