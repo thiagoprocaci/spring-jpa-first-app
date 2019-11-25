@@ -46,6 +46,11 @@ public class RoomController {
 
     @RequestMapping(method = RequestMethod.DELETE)
     public void remove(@RequestBody Room room) {
+        List<Student> studentsByRoom = studentRepository.findByRoom(room);
+        for(Student s: studentsByRoom) {
+            s.setRoom(null);
+            studentRepository.save(s);
+        }
         roomRepository.delete(room.getId());
     }
 
@@ -59,12 +64,14 @@ public class RoomController {
         List<Student> studentList = room.getStudentList();
         room.setStudentList(null);
         Room p = roomRepository.save(room);
+        p.setStudentList(new ArrayList<Student>());
         for(Student student : studentList) {
             student = studentRepository.findOne(student.getId());
             student.setRoom(p);
-            studentRepository.save(student);
+            Student s = studentRepository.save(student);
+            p.getStudentList().add(s);
         }
-        return roomRepository.findOne(room.getId());
+        return p;
     }
 
 }
