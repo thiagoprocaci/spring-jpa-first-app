@@ -36,8 +36,11 @@ public class PersonController {
                      @RequestParam("username") String username,
                      @RequestParam("password") String password,
                      Map<String, Object> model) {
+        Hobby hobby = null;
+        if(idHobby != null) {
+            hobby = hobbyRepository.findOne(idHobby);
+        }
 
-        Hobby hobby = hobbyRepository.findOne(idHobby);
         Person person = new Person();
         person.setName(name);
         person.setAge(age);
