@@ -1,6 +1,6 @@
 package com.tbp.repository;
 
-import com.tbp.model.Person;
+import com.tbp.modelo.Person;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

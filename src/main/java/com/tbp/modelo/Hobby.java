@@ -1,4 +1,4 @@
-package com.tbp.model;
+package com.tbp.modelo;
 
 
 import javax.persistence.*;
