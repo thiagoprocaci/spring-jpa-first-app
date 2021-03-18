@@ -1,33 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.tbp.visao;
 
-import com.tbp.modelo.Hobby;
-import com.tbp.repository.HobbyRepository;
-import com.tbp.repository.PersonRepository;
+import com.tbp.modelo.*;
+import com.tbp.repository.*;
+import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- *
- * @author thiago
- */
+
 @Component
 public class Janela extends javax.swing.JFrame {
     
     
     @Autowired
-    private PersonRepository personRepository;
+    private EmpresaRepository empresaRepository;
     @Autowired
-    private HobbyRepository hobbyRepository;
+    private FuncionarioRepository funcionarioRepository;
     
     public Janela() {
         initComponents();  
-       // long count = personRepository.count();
-       // System.out.print(count);
     }
     
     
@@ -41,56 +31,228 @@ public class Janela extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        nomeTextField = new javax.swing.JTextField();
+        abaCadastroFuncionario = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        nomeEmpresa = new javax.swing.JTextField();
+        cnpjEmpresa = new javax.swing.JTextField();
+        botaoSalvarEmpresa = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        nomeFuncionario = new javax.swing.JTextField();
+        cpfFuncionario = new javax.swing.JTextField();
+        salarioFuncionario = new javax.swing.JTextField();
+        comboEmpresa = new javax.swing.JComboBox<>();
+        botaoSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Nome");
-
-        jButton1.setText("Salvar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        abaCadastroFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                abaCadastroFuncionarioMouseClicked(evt);
             }
         });
+
+        jLabel1.setText("CNPJ:");
+
+        jLabel2.setText("Nome:");
+
+        nomeEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nomeEmpresaActionPerformed(evt);
+            }
+        });
+
+        cnpjEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cnpjEmpresaActionPerformed(evt);
+            }
+        });
+
+        botaoSalvarEmpresa.setText("Salvar");
+        botaoSalvarEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSalvarEmpresaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cnpjEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(231, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botaoSalvarEmpresa)
+                .addGap(80, 80, 80))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(nomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(cnpjEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(botaoSalvarEmpresa)
+                .addContainerGap(88, Short.MAX_VALUE))
+        );
+
+        abaCadastroFuncionario.addTab("Cadastro Empresa", jPanel1);
+
+        jLabel3.setText("Nome:");
+
+        jLabel4.setText("CPF:");
+
+        jLabel5.setText("Salario:");
+
+        jLabel6.setText("Empresa:");
+
+        comboEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboEmpresaActionPerformed(evt);
+            }
+        });
+
+        botaoSalvar.setText("Salvar");
+        botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSalvarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cpfFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nomeFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(botaoSalvar))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(comboEmpresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(33, 33, 33)
+                                .addComponent(salarioFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap(234, Short.MAX_VALUE))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(nomeFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(cpfFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(salarioFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(comboEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(botaoSalvar)
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+
+        abaCadastroFuncionario.addTab("Cadastro Funcionario", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nomeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(219, Short.MAX_VALUE))
+            .addComponent(abaCadastroFuncionario)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nomeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(30, 30, 30)
-                .addComponent(jButton1)
-                .addContainerGap(144, Short.MAX_VALUE))
+            .addComponent(abaCadastroFuncionario)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String text = nomeTextField.getText();
-        Hobby hobby = new Hobby();
-        hobby.setName(text);
-        hobbyRepository.save(hobby);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void nomeEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeEmpresaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nomeEmpresaActionPerformed
+
+    private void cnpjEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cnpjEmpresaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cnpjEmpresaActionPerformed
+
+    private void botaoSalvarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarEmpresaActionPerformed
+        String nome = nomeEmpresa.getText();
+        String cnpj = cnpjEmpresa.getText();
+        Empresa empresa = new Empresa(nome, cnpj);
+        empresaRepository.save(empresa);
+        JOptionPane.showMessageDialog(null, "Empresa salva com sucesso");
+        
+        nomeEmpresa.setText("");
+        cnpjEmpresa.setText("");
+    }//GEN-LAST:event_botaoSalvarEmpresaActionPerformed
+
+    private void comboEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEmpresaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboEmpresaActionPerformed
+
+    private void abaCadastroFuncionarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abaCadastroFuncionarioMouseClicked
+        Iterable<Empresa> empresas = empresaRepository.findAll();
+        for(Empresa empresa : empresas) {
+            comboEmpresa.addItem(empresa);
+        }
+        
+    }//GEN-LAST:event_abaCadastroFuncionarioMouseClicked
+
+    private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
+        String nome = nomeFuncionario.getText();
+        String cpf = cpfFuncionario.getText();
+        Double salario = Double.parseDouble(salarioFuncionario.getText());
+        Empresa empresa = (Empresa) comboEmpresa.getSelectedItem();
+        Funcionario funcionario = new Funcionario(nome,  cpf, salario, empresa);
+        funcionarioRepository.save(funcionario);
+        JOptionPane.showMessageDialog(null, "Funcionario salvo com sucesso");
+        nomeFuncionario.setText("");
+        cpfFuncionario.setText("");
+        salarioFuncionario.setText("");
+        
+    }//GEN-LAST:event_botaoSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -128,8 +290,22 @@ public class Janela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTabbedPane abaCadastroFuncionario;
+    private javax.swing.JButton botaoSalvar;
+    private javax.swing.JButton botaoSalvarEmpresa;
+    private javax.swing.JTextField cnpjEmpresa;
+    private javax.swing.JComboBox<Empresa> comboEmpresa;
+    private javax.swing.JTextField cpfFuncionario;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField nomeTextField;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField nomeEmpresa;
+    private javax.swing.JTextField nomeFuncionario;
+    private javax.swing.JTextField salarioFuncionario;
     // End of variables declaration//GEN-END:variables
 }
