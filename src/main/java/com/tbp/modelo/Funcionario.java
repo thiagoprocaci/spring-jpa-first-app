@@ -70,6 +70,21 @@ public class Funcionario {
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return "nome=" + nome + ", cpf=" + cpf ;
+    }
     
     
     
