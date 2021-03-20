@@ -377,25 +377,12 @@ public class Janela extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tabPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabPanelMouseClicked
-        Iterable<Empresa> empresas = empresaRepository.findAll();
-        comboCadastrarEmpresa.removeAllItems();        
-        for(Empresa empresa : empresas) {
-            comboCadastrarEmpresa.addItem(empresa);
-        }
+        // implementar para preencher a combo empresa no cadastro de funcionario
 
     }//GEN-LAST:event_tabPanelMouseClicked
 
     private void botaoSalvarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarFuncionarioActionPerformed
-        String nome = campoCadastrarNome.getText();
-        String cpf = campoCadastrarCpf.getText();
-        Double salario = Double.parseDouble(campoCadastrarSalario.getText());
-        Empresa empresa = (Empresa) comboCadastrarEmpresa.getSelectedItem();
-        Funcionario funcionario = new Funcionario(nome,  cpf, salario, empresa);
-        funcionarioRepository.save(funcionario);
-        JOptionPane.showMessageDialog(null, "Funcionario salvo com sucesso");
-        campoCadastrarNome.setText("");
-        campoCadastrarCpf.setText("");
-        campoCadastrarSalario.setText("");
+        // implementar o salvar funcionario
 
     }//GEN-LAST:event_botaoSalvarFuncionarioActionPerformed
 
@@ -404,14 +391,7 @@ public class Janela extends javax.swing.JFrame {
     }//GEN-LAST:event_comboCadastrarEmpresaActionPerformed
 
     private void botaoSalvarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarEmpresaActionPerformed
-        String nome = nomeEmpresa.getText();
-        String cnpj = cnpjEmpresa.getText();
-        Empresa empresa = new Empresa(nome, cnpj);
-        empresaRepository.save(empresa);
-        JOptionPane.showMessageDialog(null, "Empresa salva com sucesso");
-
-        nomeEmpresa.setText("");
-        cnpjEmpresa.setText("");
+        // TODO implementar o salvar empresa
     }//GEN-LAST:event_botaoSalvarEmpresaActionPerformed
 
     private void cnpjEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cnpjEmpresaActionPerformed
@@ -427,49 +407,11 @@ public class Janela extends javax.swing.JFrame {
     }//GEN-LAST:event_campoBuscaActionPerformed
 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
-        String nome = campoBusca.getText();
-        List<Funcionario> funcionarioList = funcionarioRepository.findByNomeIgnoreCaseContaining(nome);
-        JList jList = new JList();
-        DefaultListModel<Funcionario> listModel = new DefaultListModel();
-        for(Funcionario funcionario : funcionarioList) {
-            listModel.addElement(funcionario);
-        }
-        jList.setModel(listModel);
-        painelResultados.setViewportView(jList);
-        painelResultados.setVisible(true);
-        jList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-              Funcionario f = (Funcionario) jList.getSelectedValue();
-              campoEditarId.setText(f.getId() + "");
-              campoEditarCpf.setText(f.getCpf());
-              campoEditarSalario.setText(f.getSalario() + "");
-              campoEditarNome.setText(f.getNome());
-              Iterable<Empresa> empresas = empresaRepository.findAll();
-              comboEditarEmpresa.removeAllItems();        
-              for(Empresa empresa : empresas) {
-                  comboEditarEmpresa.addItem(empresa);
-                  if(empresa.getId().equals(f.getEmpresa().getId())) {
-                      comboEditarEmpresa.setSelectedItem(empresa);
-                  }
-              }
-              tabPanel.setSelectedComponent(abaExibir);
-              listModel.clear();
-            }            
-        });
+        // TODO implementar a busca de funcionario
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
     private void botaoEditarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarFuncionarioActionPerformed
-        Integer id = Integer.parseInt(campoEditarId.getText());
-        String nome = campoEditarNome.getText();
-        String cpf = campoEditarCpf.getText();
-        Double salario = Double.parseDouble(campoEditarSalario.getText());
-        Empresa empresa = (Empresa) comboEditarEmpresa.getSelectedItem();
-        Funcionario funcionario = new Funcionario(nome,  cpf, salario, empresa);
-        funcionario.setId(id);
-        funcionarioRepository.save(funcionario);
-        JOptionPane.showMessageDialog(null, "Funcionario atualizado com sucesso");
-        tabPanel.setSelectedComponent(abaBuscar);
+        // TODO implementar o editar funcionarios
       
     }//GEN-LAST:event_botaoEditarFuncionarioActionPerformed
 
@@ -478,9 +420,7 @@ public class Janela extends javax.swing.JFrame {
     }//GEN-LAST:event_abaBuscarFocusGained
 
     private void botaoRemoverFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverFuncionarioActionPerformed
-        Integer id = Integer.parseInt(campoEditarId.getText());
-        funcionarioRepository.deleteById(id);
-        tabPanel.setSelectedComponent(abaBuscar);
+        // implementar o remover funcionario
     }//GEN-LAST:event_botaoRemoverFuncionarioActionPerformed
 
 
