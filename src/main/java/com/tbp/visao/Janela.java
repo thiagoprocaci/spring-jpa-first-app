@@ -52,8 +52,8 @@ public class Janela extends javax.swing.JFrame {
         campoCadastrarNome = new javax.swing.JTextField();
         campoCadastrarCpf = new javax.swing.JTextField();
         campoCadastrarSalario = new javax.swing.JTextField();
-        campoCadastrarEmpresa = new javax.swing.JComboBox<>();
-        botaoSalvar = new javax.swing.JButton();
+        comboCadastrarEmpresa = new javax.swing.JComboBox<>();
+        botaoSalvarFuncionario = new javax.swing.JButton();
         abaBuscar = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         campoBusca = new javax.swing.JTextField();
@@ -69,9 +69,9 @@ public class Janela extends javax.swing.JFrame {
         campoEditarNome = new javax.swing.JTextField();
         campoEditarCpf = new javax.swing.JTextField();
         campoEditarSalario = new javax.swing.JTextField();
-        campoEditarEmpresa = new javax.swing.JComboBox<>();
-        botaoEditar = new javax.swing.JButton();
-        botaoRemover = new javax.swing.JButton();
+        comboEditarEmpresa = new javax.swing.JComboBox<>();
+        botaoEditarFuncionario = new javax.swing.JButton();
+        botaoRemoverFuncionario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -149,16 +149,16 @@ public class Janela extends javax.swing.JFrame {
 
         jLabel6.setText("Empresa:");
 
-        campoCadastrarEmpresa.addActionListener(new java.awt.event.ActionListener() {
+        comboCadastrarEmpresa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoCadastrarEmpresaActionPerformed(evt);
+                comboCadastrarEmpresaActionPerformed(evt);
             }
         });
 
-        botaoSalvar.setText("Salvar");
-        botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
+        botaoSalvarFuncionario.setText("Salvar");
+        botaoSalvarFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSalvarActionPerformed(evt);
+                botaoSalvarFuncionarioActionPerformed(evt);
             }
         });
 
@@ -181,11 +181,11 @@ public class Janela extends javax.swing.JFrame {
                         .addGroup(abaCadastroFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(abaCadastroFuncionarioLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(botaoSalvar))
+                                .addComponent(botaoSalvarFuncionario))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, abaCadastroFuncionarioLayout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
-                                .addComponent(campoCadastrarEmpresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(comboCadastrarEmpresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, abaCadastroFuncionarioLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(33, 33, 33)
@@ -211,9 +211,9 @@ public class Janela extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(abaCadastroFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(campoCadastrarEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboCadastrarEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(botaoSalvar)
+                .addComponent(botaoSalvarFuncionario)
                 .addContainerGap(84, Short.MAX_VALUE))
         );
 
@@ -283,17 +283,17 @@ public class Janela extends javax.swing.JFrame {
 
         campoEditarId.setEditable(false);
 
-        botaoEditar.setText("Editar");
-        botaoEditar.addActionListener(new java.awt.event.ActionListener() {
+        botaoEditarFuncionario.setText("Editar");
+        botaoEditarFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoEditarActionPerformed(evt);
+                botaoEditarFuncionarioActionPerformed(evt);
             }
         });
 
-        botaoRemover.setText("Remover");
-        botaoRemover.addActionListener(new java.awt.event.ActionListener() {
+        botaoRemoverFuncionario.setText("Remover");
+        botaoRemoverFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoRemoverActionPerformed(evt);
+                botaoRemoverFuncionarioActionPerformed(evt);
             }
         });
 
@@ -307,7 +307,7 @@ public class Janela extends javax.swing.JFrame {
                     .addGroup(abaExibirLayout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoEditarEmpresa, 0, 310, Short.MAX_VALUE))
+                        .addComponent(comboEditarEmpresa, 0, 310, Short.MAX_VALUE))
                     .addGroup(abaExibirLayout.createSequentialGroup()
                         .addGroup(abaExibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
@@ -323,9 +323,9 @@ public class Janela extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, abaExibirLayout.createSequentialGroup()
                 .addContainerGap(340, Short.MAX_VALUE)
-                .addComponent(botaoEditar)
+                .addComponent(botaoEditarFuncionario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(botaoRemover)
+                .addComponent(botaoRemoverFuncionario)
                 .addGap(154, 154, 154))
         );
         abaExibirLayout.setVerticalGroup(
@@ -350,11 +350,11 @@ public class Janela extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(abaExibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
-                    .addComponent(campoEditarEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboEditarEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(abaExibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoEditar)
-                    .addComponent(botaoRemover))
+                    .addComponent(botaoEditarFuncionario)
+                    .addComponent(botaoRemoverFuncionario))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
@@ -378,18 +378,18 @@ public class Janela extends javax.swing.JFrame {
 
     private void tabPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabPanelMouseClicked
         Iterable<Empresa> empresas = empresaRepository.findAll();
-        campoCadastrarEmpresa.removeAllItems();        
+        comboCadastrarEmpresa.removeAllItems();        
         for(Empresa empresa : empresas) {
-            campoCadastrarEmpresa.addItem(empresa);
+            comboCadastrarEmpresa.addItem(empresa);
         }
 
     }//GEN-LAST:event_tabPanelMouseClicked
 
-    private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
+    private void botaoSalvarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarFuncionarioActionPerformed
         String nome = campoCadastrarNome.getText();
         String cpf = campoCadastrarCpf.getText();
         Double salario = Double.parseDouble(campoCadastrarSalario.getText());
-        Empresa empresa = (Empresa) campoCadastrarEmpresa.getSelectedItem();
+        Empresa empresa = (Empresa) comboCadastrarEmpresa.getSelectedItem();
         Funcionario funcionario = new Funcionario(nome,  cpf, salario, empresa);
         funcionarioRepository.save(funcionario);
         JOptionPane.showMessageDialog(null, "Funcionario salvo com sucesso");
@@ -397,11 +397,11 @@ public class Janela extends javax.swing.JFrame {
         campoCadastrarCpf.setText("");
         campoCadastrarSalario.setText("");
 
-    }//GEN-LAST:event_botaoSalvarActionPerformed
+    }//GEN-LAST:event_botaoSalvarFuncionarioActionPerformed
 
-    private void campoCadastrarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCadastrarEmpresaActionPerformed
+    private void comboCadastrarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCadastrarEmpresaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoCadastrarEmpresaActionPerformed
+    }//GEN-LAST:event_comboCadastrarEmpresaActionPerformed
 
     private void botaoSalvarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarEmpresaActionPerformed
         String nome = nomeEmpresa.getText();
@@ -446,11 +446,11 @@ public class Janela extends javax.swing.JFrame {
               campoEditarSalario.setText(f.getSalario() + "");
               campoEditarNome.setText(f.getNome());
               Iterable<Empresa> empresas = empresaRepository.findAll();
-              campoEditarEmpresa.removeAllItems();        
+              comboEditarEmpresa.removeAllItems();        
               for(Empresa empresa : empresas) {
-                  campoEditarEmpresa.addItem(empresa);
+                  comboEditarEmpresa.addItem(empresa);
                   if(empresa.getId().equals(f.getEmpresa().getId())) {
-                      campoEditarEmpresa.setSelectedItem(empresa);
+                      comboEditarEmpresa.setSelectedItem(empresa);
                   }
               }
               tabPanel.setSelectedComponent(abaExibir);
@@ -459,29 +459,29 @@ public class Janela extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
-    private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
+    private void botaoEditarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarFuncionarioActionPerformed
         Integer id = Integer.parseInt(campoEditarId.getText());
         String nome = campoEditarNome.getText();
         String cpf = campoEditarCpf.getText();
         Double salario = Double.parseDouble(campoEditarSalario.getText());
-        Empresa empresa = (Empresa) campoEditarEmpresa.getSelectedItem();
+        Empresa empresa = (Empresa) comboEditarEmpresa.getSelectedItem();
         Funcionario funcionario = new Funcionario(nome,  cpf, salario, empresa);
         funcionario.setId(id);
         funcionarioRepository.save(funcionario);
         JOptionPane.showMessageDialog(null, "Funcionario atualizado com sucesso");
         tabPanel.setSelectedComponent(abaBuscar);
       
-    }//GEN-LAST:event_botaoEditarActionPerformed
+    }//GEN-LAST:event_botaoEditarFuncionarioActionPerformed
 
     private void abaBuscarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_abaBuscarFocusGained
       
     }//GEN-LAST:event_abaBuscarFocusGained
 
-    private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
+    private void botaoRemoverFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverFuncionarioActionPerformed
         Integer id = Integer.parseInt(campoEditarId.getText());
         funcionarioRepository.deleteById(id);
         tabPanel.setSelectedComponent(abaBuscar);
-    }//GEN-LAST:event_botaoRemoverActionPerformed
+    }//GEN-LAST:event_botaoRemoverFuncionarioActionPerformed
 
 
 
@@ -491,21 +491,21 @@ public class Janela extends javax.swing.JFrame {
     private javax.swing.JPanel abaCadastroFuncionario;
     private javax.swing.JPanel abaExibir;
     private javax.swing.JButton botaoBuscar;
-    private javax.swing.JButton botaoEditar;
-    private javax.swing.JButton botaoRemover;
-    private javax.swing.JButton botaoSalvar;
+    private javax.swing.JButton botaoEditarFuncionario;
+    private javax.swing.JButton botaoRemoverFuncionario;
     private javax.swing.JButton botaoSalvarEmpresa;
+    private javax.swing.JButton botaoSalvarFuncionario;
     private javax.swing.JTextField campoBusca;
     private javax.swing.JTextField campoCadastrarCpf;
-    private javax.swing.JComboBox<Empresa> campoCadastrarEmpresa;
     private javax.swing.JTextField campoCadastrarNome;
     private javax.swing.JTextField campoCadastrarSalario;
     private javax.swing.JTextField campoEditarCpf;
-    private javax.swing.JComboBox<Empresa> campoEditarEmpresa;
     private javax.swing.JTextField campoEditarId;
     private javax.swing.JTextField campoEditarNome;
     private javax.swing.JTextField campoEditarSalario;
     private javax.swing.JTextField cnpjEmpresa;
+    private javax.swing.JComboBox<Empresa> comboCadastrarEmpresa;
+    private javax.swing.JComboBox<Empresa> comboEditarEmpresa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
