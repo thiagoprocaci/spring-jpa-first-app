@@ -4,8 +4,12 @@ import com.tbp.modelo.*;
 import com.tbp.repository.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
@@ -72,6 +76,9 @@ public class Janela extends javax.swing.JFrame {
         comboEditarEmpresa = new javax.swing.JComboBox<>();
         botaoEditarFuncionario = new javax.swing.JButton();
         botaoRemoverFuncionario = new javax.swing.JButton();
+        abaExportar = new javax.swing.JPanel();
+        botaoExportarFuncionarios = new javax.swing.JButton();
+        botaoExportarEmpresas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,7 +124,7 @@ public class Janela extends javax.swing.JFrame {
                 .addGroup(abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cnpjEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(295, Short.MAX_VALUE))
+                .addContainerGap(402, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, abaCadastroEmpresaLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botaoSalvarEmpresa)
@@ -191,7 +198,7 @@ public class Janela extends javax.swing.JFrame {
                                 .addGap(33, 33, 33)
                                 .addComponent(campoCadastrarSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap(298, Short.MAX_VALUE))))
+                        .addContainerGap(404, Short.MAX_VALUE))))
         );
         abaCadastroFuncionarioLayout.setVerticalGroup(
             abaCadastroFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,7 +261,7 @@ public class Janela extends javax.swing.JFrame {
                         .addComponent(campoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(botaoBuscar)))
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(219, Short.MAX_VALUE))
         );
         abaBuscarLayout.setVerticalGroup(
             abaBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,7 +329,7 @@ public class Janela extends javax.swing.JFrame {
                             .addComponent(campoEditarId))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, abaExibirLayout.createSequentialGroup()
-                .addContainerGap(340, Short.MAX_VALUE)
+                .addContainerGap(447, Short.MAX_VALUE)
                 .addComponent(botaoEditarFuncionario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botaoRemoverFuncionario)
@@ -360,12 +367,49 @@ public class Janela extends javax.swing.JFrame {
 
         tabPanel.addTab("Exibir Funcionario", abaExibir);
 
+        botaoExportarFuncionarios.setText("Exportar Funcionários");
+        botaoExportarFuncionarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoExportarFuncionariosActionPerformed(evt);
+            }
+        });
+
+        botaoExportarEmpresas.setText("Exportar Empresas");
+        botaoExportarEmpresas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoExportarEmpresasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout abaExportarLayout = new javax.swing.GroupLayout(abaExportar);
+        abaExportar.setLayout(abaExportarLayout);
+        abaExportarLayout.setHorizontalGroup(
+            abaExportarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(abaExportarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(abaExportarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(botaoExportarFuncionarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botaoExportarEmpresas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(563, Short.MAX_VALUE))
+        );
+        abaExportarLayout.setVerticalGroup(
+            abaExportarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(abaExportarLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(botaoExportarFuncionarios)
+                .addGap(18, 18, 18)
+                .addComponent(botaoExportarEmpresas)
+                .addContainerGap(211, Short.MAX_VALUE))
+        );
+
+        tabPanel.addTab("Exportar", abaExportar);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(tabPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tabPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 747, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -483,6 +527,67 @@ public class Janela extends javax.swing.JFrame {
         tabPanel.setSelectedComponent(abaBuscar);
     }//GEN-LAST:event_botaoRemoverFuncionarioActionPerformed
 
+    private void botaoExportarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExportarFuncionariosActionPerformed
+        
+        Iterable<Funcionario> funcionarios = funcionarioRepository.findAll();
+        
+         try {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
+            fileChooser.showSaveDialog(null);
+                
+            File file = new File(fileChooser.getSelectedFile(), "funcionarios.csv");
+            System.out.println(file.getAbsolutePath());
+            FileWriter fileWriter = new FileWriter(file, false);
+            StringBuffer  buffer = new StringBuffer();
+            for(Funcionario funcionario : funcionarios) {
+                buffer.append(funcionario.getId());
+                buffer.append(";");
+                buffer.append(funcionario.getNome());
+                buffer.append(";");
+                buffer.append(funcionario.getCpf());
+                buffer.append(";");
+                buffer.append(funcionario.getSalario());
+                buffer.append("\n");
+            }
+            String texto = buffer.toString();
+            fileWriter.append(texto);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_botaoExportarFuncionariosActionPerformed
+
+    private void botaoExportarEmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExportarEmpresasActionPerformed
+       Iterable<Empresa> empresas= empresaRepository.findAll();
+        
+         try {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
+            fileChooser.showSaveDialog(null);
+                
+            File file = new File(fileChooser.getSelectedFile(), "empresas.csv");
+            System.out.println(file.getAbsolutePath());
+            FileWriter fileWriter = new FileWriter(file, false);
+            StringBuffer  buffer = new StringBuffer();
+            for(Empresa funcionario : empresas) {
+                buffer.append(funcionario.getId());
+                buffer.append(";");
+                buffer.append(funcionario.getNome());
+                buffer.append(";");
+                buffer.append(funcionario.getCnpj());
+                buffer.append("\n");
+            }
+            String texto = buffer.toString();
+            fileWriter.append(texto);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_botaoExportarEmpresasActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -490,8 +595,11 @@ public class Janela extends javax.swing.JFrame {
     private javax.swing.JPanel abaCadastroEmpresa;
     private javax.swing.JPanel abaCadastroFuncionario;
     private javax.swing.JPanel abaExibir;
+    private javax.swing.JPanel abaExportar;
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoEditarFuncionario;
+    private javax.swing.JButton botaoExportarEmpresas;
+    private javax.swing.JButton botaoExportarFuncionarios;
     private javax.swing.JButton botaoRemoverFuncionario;
     private javax.swing.JButton botaoSalvarEmpresa;
     private javax.swing.JButton botaoSalvarFuncionario;
