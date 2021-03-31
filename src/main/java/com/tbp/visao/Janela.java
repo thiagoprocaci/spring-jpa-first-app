@@ -1,9 +1,14 @@
 package com.tbp.visao;
 
+import com.tbp.excecao.SemSaldoException;
 import com.tbp.modelo.*;
-import com.tbp.repository.*;
+import com.tbp.service.ContaService;
+import com.tbp.service.Extrato;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -16,14 +21,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class Janela extends javax.swing.JFrame {
     
+    private ContaService contaService;
     
-    @Autowired
-    private EmpresaRepository empresaRepository;
-    @Autowired
-    private FuncionarioRepository funcionarioRepository;
-    
-    public Janela() {
+    @Autowired 
+    public Janela(ContaService contaService) {
+        contaService.inicializar();
+        this.contaService = contaService;
         initComponents();  
+        campoID.setVisible(false);
     }
     
     
@@ -38,40 +43,26 @@ public class Janela extends javax.swing.JFrame {
     private void initComponents() {
 
         tabPanel = new javax.swing.JTabbedPane();
-        abaCadastroEmpresa = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        nomeEmpresa = new javax.swing.JTextField();
-        cnpjEmpresa = new javax.swing.JTextField();
-        botaoSalvarEmpresa = new javax.swing.JButton();
-        abaCadastroFuncionario = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        campoCadastrarNome = new javax.swing.JTextField();
-        campoCadastrarCpf = new javax.swing.JTextField();
-        campoCadastrarSalario = new javax.swing.JTextField();
-        comboCadastrarEmpresa = new javax.swing.JComboBox<>();
-        botaoSalvarFuncionario = new javax.swing.JButton();
-        abaBuscar = new javax.swing.JPanel();
+        abaContas = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         campoBusca = new javax.swing.JTextField();
         painelResultados = new javax.swing.JScrollPane();
         botaoBuscar = new javax.swing.JButton();
-        abaExibir = new javax.swing.JPanel();
+        abaMovimentos = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        campoNum = new javax.swing.JTextField();
+        campoNome = new javax.swing.JTextField();
+        campoBanco = new javax.swing.JTextField();
+        campoSaldo = new javax.swing.JTextField();
+        botaoSacar = new javax.swing.JButton();
+        botaoDepositar = new javax.swing.JButton();
+        campoID = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        campoEditarId = new javax.swing.JTextField();
-        campoEditarNome = new javax.swing.JTextField();
-        campoEditarCpf = new javax.swing.JTextField();
-        campoEditarSalario = new javax.swing.JTextField();
-        comboEditarEmpresa = new javax.swing.JComboBox<>();
-        botaoEditarFuncionario = new javax.swing.JButton();
-        botaoRemoverFuncionario = new javax.swing.JButton();
+        campoValorMov = new javax.swing.JTextField();
+        botaoExtrato = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,152 +71,29 @@ public class Janela extends javax.swing.JFrame {
                 tabPanelMouseClicked(evt);
             }
         });
-
-        jLabel1.setText("CNPJ:");
-
-        jLabel2.setText("Nome:");
-
-        nomeEmpresa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomeEmpresaActionPerformed(evt);
+        tabPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                tabPanelComponentShown(evt);
             }
         });
 
-        cnpjEmpresa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cnpjEmpresaActionPerformed(evt);
+        abaContas.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                abaContasComponentAdded(evt);
             }
         });
-
-        botaoSalvarEmpresa.setText("Salvar");
-        botaoSalvarEmpresa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSalvarEmpresaActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout abaCadastroEmpresaLayout = new javax.swing.GroupLayout(abaCadastroEmpresa);
-        abaCadastroEmpresa.setLayout(abaCadastroEmpresaLayout);
-        abaCadastroEmpresaLayout.setHorizontalGroup(
-            abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(abaCadastroEmpresaLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cnpjEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(295, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, abaCadastroEmpresaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botaoSalvarEmpresa)
-                .addGap(80, 80, 80))
-        );
-        abaCadastroEmpresaLayout.setVerticalGroup(
-            abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(abaCadastroEmpresaLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addGroup(abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(nomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cnpjEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addComponent(botaoSalvarEmpresa)
-                .addContainerGap(138, Short.MAX_VALUE))
-        );
-
-        tabPanel.addTab("Cadastro Empresa", abaCadastroEmpresa);
-
-        jLabel3.setText("Nome:");
-
-        jLabel4.setText("CPF:");
-
-        jLabel5.setText("Salario:");
-
-        jLabel6.setText("Empresa:");
-
-        comboCadastrarEmpresa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboCadastrarEmpresaActionPerformed(evt);
-            }
-        });
-
-        botaoSalvarFuncionario.setText("Salvar");
-        botaoSalvarFuncionario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSalvarFuncionarioActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout abaCadastroFuncionarioLayout = new javax.swing.GroupLayout(abaCadastroFuncionario);
-        abaCadastroFuncionario.setLayout(abaCadastroFuncionarioLayout);
-        abaCadastroFuncionarioLayout.setHorizontalGroup(
-            abaCadastroFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(abaCadastroFuncionarioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(abaCadastroFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(abaCadastroFuncionarioLayout.createSequentialGroup()
-                        .addGroup(abaCadastroFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(37, 37, 37)
-                        .addGroup(abaCadastroFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(campoCadastrarCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(campoCadastrarNome, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(abaCadastroFuncionarioLayout.createSequentialGroup()
-                        .addGroup(abaCadastroFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(abaCadastroFuncionarioLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(botaoSalvarFuncionario))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, abaCadastroFuncionarioLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(comboCadastrarEmpresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, abaCadastroFuncionarioLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(33, 33, 33)
-                                .addComponent(campoCadastrarSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap(298, Short.MAX_VALUE))))
-        );
-        abaCadastroFuncionarioLayout.setVerticalGroup(
-            abaCadastroFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(abaCadastroFuncionarioLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(abaCadastroFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(campoCadastrarNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(abaCadastroFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(campoCadastrarCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(abaCadastroFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(campoCadastrarSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(abaCadastroFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(comboCadastrarEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(botaoSalvarFuncionario)
-                .addContainerGap(84, Short.MAX_VALUE))
-        );
-
-        tabPanel.addTab("Cadastro Funcionario", abaCadastroFuncionario);
-
-        abaBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
+        abaContas.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                abaBuscarFocusGained(evt);
+                abaContasFocusGained(evt);
+            }
+        });
+        abaContas.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                abaContasComponentShown(evt);
             }
         });
 
-        jLabel7.setText("Busca:");
+        jLabel7.setText("Número");
 
         campoBusca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,15 +108,15 @@ public class Janela extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout abaBuscarLayout = new javax.swing.GroupLayout(abaBuscar);
-        abaBuscar.setLayout(abaBuscarLayout);
-        abaBuscarLayout.setHorizontalGroup(
-            abaBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(abaBuscarLayout.createSequentialGroup()
+        javax.swing.GroupLayout abaContasLayout = new javax.swing.GroupLayout(abaContas);
+        abaContas.setLayout(abaContasLayout);
+        abaContasLayout.setHorizontalGroup(
+            abaContasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(abaContasLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(abaBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(abaContasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(painelResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(abaBuscarLayout.createSequentialGroup()
+                    .addGroup(abaContasLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -256,11 +124,11 @@ public class Janela extends javax.swing.JFrame {
                         .addComponent(botaoBuscar)))
                 .addContainerGap(112, Short.MAX_VALUE))
         );
-        abaBuscarLayout.setVerticalGroup(
-            abaBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(abaBuscarLayout.createSequentialGroup()
+        abaContasLayout.setVerticalGroup(
+            abaContasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(abaContasLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(abaBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(abaContasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(campoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoBuscar))
@@ -269,96 +137,117 @@ public class Janela extends javax.swing.JFrame {
                 .addContainerGap(71, Short.MAX_VALUE))
         );
 
-        tabPanel.addTab("Buscar Funcionario", abaBuscar);
+        tabPanel.addTab("Contas", abaContas);
 
-        jLabel8.setText("ID");
+        jLabel8.setText("Num.");
 
         jLabel9.setText("Nome");
 
-        jLabel10.setText("CPF");
+        jLabel10.setText("Banco");
 
-        jLabel11.setText("Salario");
+        jLabel11.setText("Saldo");
 
-        jLabel12.setText("Empresa");
+        campoNum.setEditable(false);
 
-        campoEditarId.setEditable(false);
+        campoNome.setEditable(false);
 
-        botaoEditarFuncionario.setText("Editar");
-        botaoEditarFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        campoBanco.setEditable(false);
+
+        campoSaldo.setEditable(false);
+
+        botaoSacar.setText("Sacar");
+        botaoSacar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoEditarFuncionarioActionPerformed(evt);
+                botaoSacarActionPerformed(evt);
             }
         });
 
-        botaoRemoverFuncionario.setText("Remover");
-        botaoRemoverFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        botaoDepositar.setText("Depositar");
+        botaoDepositar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoRemoverFuncionarioActionPerformed(evt);
+                botaoDepositarActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout abaExibirLayout = new javax.swing.GroupLayout(abaExibir);
-        abaExibir.setLayout(abaExibirLayout);
-        abaExibirLayout.setHorizontalGroup(
-            abaExibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(abaExibirLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(abaExibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(abaExibirLayout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboEditarEmpresa, 0, 310, Short.MAX_VALUE))
-                    .addGroup(abaExibirLayout.createSequentialGroup()
-                        .addGroup(abaExibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        campoID.setEditable(false);
+
+        jLabel12.setText("Valor Mov.");
+
+        botaoExtrato.setText("Extrato");
+        botaoExtrato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoExtratoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout abaMovimentosLayout = new javax.swing.GroupLayout(abaMovimentos);
+        abaMovimentos.setLayout(abaMovimentosLayout);
+        abaMovimentosLayout.setHorizontalGroup(
+            abaMovimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(abaMovimentosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(abaMovimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(abaMovimentosLayout.createSequentialGroup()
+                        .addGroup(abaMovimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addComponent(jLabel9)
                             .addComponent(jLabel10)
                             .addComponent(jLabel11))
                         .addGap(24, 24, 24)
-                        .addGroup(abaExibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(campoEditarSalario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-                            .addComponent(campoEditarCpf, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(campoEditarNome, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(campoEditarId))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, abaExibirLayout.createSequentialGroup()
-                .addContainerGap(340, Short.MAX_VALUE)
-                .addComponent(botaoEditarFuncionario)
+                        .addGroup(abaMovimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(campoSaldo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                            .addComponent(campoBanco, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(campoNome, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(campoNum)))
+                    .addGroup(abaMovimentosLayout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoValorMov, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(39, 39, 39)
+                .addComponent(campoID, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(124, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, abaMovimentosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botaoExtrato)
+                .addGap(18, 18, 18)
+                .addComponent(botaoSacar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(botaoRemoverFuncionario)
+                .addComponent(botaoDepositar)
                 .addGap(154, 154, 154))
         );
-        abaExibirLayout.setVerticalGroup(
-            abaExibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(abaExibirLayout.createSequentialGroup()
+        abaMovimentosLayout.setVerticalGroup(
+            abaMovimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(abaMovimentosLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(abaExibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(abaMovimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(campoEditarId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(abaExibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(abaMovimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(campoEditarNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(abaExibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(abaMovimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(campoEditarCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(abaExibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(abaMovimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(campoEditarSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(abaExibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12)
-                    .addComponent(comboEditarEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(abaExibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoEditarFuncionario)
-                    .addComponent(botaoRemoverFuncionario))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGroup(abaMovimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(campoValorMov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(abaMovimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoSacar)
+                    .addComponent(botaoDepositar)
+                    .addComponent(botaoExtrato))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
-        tabPanel.addTab("Exibir Funcionario", abaExibir);
+        tabPanel.addTab("Movimentos", abaMovimentos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -381,84 +270,125 @@ public class Janela extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tabPanelMouseClicked
 
-    private void botaoSalvarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarFuncionarioActionPerformed
-        // implementar o salvar funcionario
-
-    }//GEN-LAST:event_botaoSalvarFuncionarioActionPerformed
-
-    private void comboCadastrarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCadastrarEmpresaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboCadastrarEmpresaActionPerformed
-
-    private void botaoSalvarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarEmpresaActionPerformed
-        // TODO implementar o salvar empresa
-    }//GEN-LAST:event_botaoSalvarEmpresaActionPerformed
-
-    private void cnpjEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cnpjEmpresaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cnpjEmpresaActionPerformed
-
-    private void nomeEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeEmpresaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nomeEmpresaActionPerformed
-
     private void campoBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoBuscaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoBuscaActionPerformed
 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
-        // TODO implementar a busca de funcionario
+
+        String busca = campoBusca.getText();
+        try {
+            Integer numeroConta = Integer.parseInt(busca);
+            List<Conta> contas = contaService.buscarContaPeloNumero(numeroConta);
+            mostrarContasListagem(contas);
+        } catch (NumberFormatException e) {
+            List<Conta> contas = contaService.listarContas();
+            mostrarContasListagem(contas);
+        }
+       
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
-    private void botaoEditarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarFuncionarioActionPerformed
-        // TODO implementar o editar funcionarios
+    private void botaoSacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSacarActionPerformed
+       try {
+         Integer idConta = Integer.parseInt(campoID.getText());
+         Double valor = Double.parseDouble(campoValorMov.getText());
+         Conta conta = contaService.sacar(idConta, valor);    
+         configurarTelaMovimento(conta);
+       } catch(NumberFormatException e) {
+         JOptionPane.showMessageDialog(null, "Valor invalido");
+       } catch(SemSaldoException e) {
+           JOptionPane.showMessageDialog(null, e.getMessage());
+       }
+    }//GEN-LAST:event_botaoSacarActionPerformed
+
+    private void abaContasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_abaContasFocusGained
       
-    }//GEN-LAST:event_botaoEditarFuncionarioActionPerformed
+    }//GEN-LAST:event_abaContasFocusGained
 
-    private void abaBuscarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_abaBuscarFocusGained
-      
-    }//GEN-LAST:event_abaBuscarFocusGained
+    private void botaoDepositarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDepositarActionPerformed
+         try {
+         Integer idConta = Integer.parseInt(campoID.getText());
+         Double valor = Double.parseDouble(campoValorMov.getText());
+         Conta conta = contaService.deposito(idConta, valor);    
+         configurarTelaMovimento(conta);
+       } catch(NumberFormatException e) {
+         JOptionPane.showMessageDialog(null, "Valor invalido");
+       }
+    }//GEN-LAST:event_botaoDepositarActionPerformed
 
-    private void botaoRemoverFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverFuncionarioActionPerformed
-        // implementar o remover funcionario
-    }//GEN-LAST:event_botaoRemoverFuncionarioActionPerformed
+    private void tabPanelComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabPanelComponentShown
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabPanelComponentShown
 
+    private void abaContasComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_abaContasComponentShown
+        List<Conta> contas = contaService.listarContas();
+        mostrarContasListagem(contas);
+    }//GEN-LAST:event_abaContasComponentShown
 
+    
+    private void mostrarContasListagem(List<Conta> contas) {
+        DefaultListModel<Conta> model = new DefaultListModel<>();
+        JList<Conta> jList = new JList(model);
+        for(Conta conta : contas) {
+            model.addElement(conta);
+        }
+        painelResultados.setViewportView(jList);
+        painelResultados.setVisible(true);
+        jList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Conta conta = jList.getSelectedValue();
+                configurarTelaMovimento(conta);
+                tabPanel.setSelectedComponent(abaMovimentos);
+     
+            }
+            
+            
+        });
+    }
+    
+    private void abaContasComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_abaContasComponentAdded
+       
+    }//GEN-LAST:event_abaContasComponentAdded
+
+    private void botaoExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExtratoActionPerformed
+        Integer idConta = Integer.parseInt(campoID.getText());
+        Extrato extrato = contaService.obterExtratoConta(idConta);
+        JOptionPane.showMessageDialog(null, extrato.toString());
+    }//GEN-LAST:event_botaoExtratoActionPerformed
+
+    private void configurarTelaMovimento(Conta conta) {
+        campoID.setText(conta.getId() + "");
+        campoBanco.setText(conta.getBanco());
+        campoNum.setText(conta.getNumero() + "");
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(); 
+        campoSaldo.setText(numberFormat.format(conta.getSaldo()));
+
+        Pessoa p = contaService.obterPessoaPelaConta(conta.getId());
+        campoNome.setText(p.getNome());
+                
+    } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel abaBuscar;
-    private javax.swing.JPanel abaCadastroEmpresa;
-    private javax.swing.JPanel abaCadastroFuncionario;
-    private javax.swing.JPanel abaExibir;
+    private javax.swing.JPanel abaContas;
+    private javax.swing.JPanel abaMovimentos;
     private javax.swing.JButton botaoBuscar;
-    private javax.swing.JButton botaoEditarFuncionario;
-    private javax.swing.JButton botaoRemoverFuncionario;
-    private javax.swing.JButton botaoSalvarEmpresa;
-    private javax.swing.JButton botaoSalvarFuncionario;
+    private javax.swing.JButton botaoDepositar;
+    private javax.swing.JButton botaoExtrato;
+    private javax.swing.JButton botaoSacar;
+    private javax.swing.JTextField campoBanco;
     private javax.swing.JTextField campoBusca;
-    private javax.swing.JTextField campoCadastrarCpf;
-    private javax.swing.JTextField campoCadastrarNome;
-    private javax.swing.JTextField campoCadastrarSalario;
-    private javax.swing.JTextField campoEditarCpf;
-    private javax.swing.JTextField campoEditarId;
-    private javax.swing.JTextField campoEditarNome;
-    private javax.swing.JTextField campoEditarSalario;
-    private javax.swing.JTextField cnpjEmpresa;
-    private javax.swing.JComboBox<Empresa> comboCadastrarEmpresa;
-    private javax.swing.JComboBox<Empresa> comboEditarEmpresa;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField campoID;
+    private javax.swing.JTextField campoNome;
+    private javax.swing.JTextField campoNum;
+    private javax.swing.JTextField campoSaldo;
+    private javax.swing.JTextField campoValorMov;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField nomeEmpresa;
     private javax.swing.JScrollPane painelResultados;
     private javax.swing.JTabbedPane tabPanel;
     // End of variables declaration//GEN-END:variables
