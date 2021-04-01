@@ -1,9 +1,6 @@
 package com.tbp.excecao;
 
-public class SemSaldoException extends Exception {
+public class SemSaldoException  {
 
-    public SemSaldoException() {
-        super("Saldo insuficiente");
-    }
     
 }

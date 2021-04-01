@@ -25,7 +25,7 @@ public class Janela extends javax.swing.JFrame {
     
     @Autowired 
     public Janela(ContaService contaService) {
-        contaService.inicializar();
+        //contaService.inicializar();
         this.contaService = contaService;
         initComponents();  
         campoID.setVisible(false);
@@ -276,29 +276,11 @@ public class Janela extends javax.swing.JFrame {
 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
 
-        String busca = campoBusca.getText();
-        try {
-            Integer numeroConta = Integer.parseInt(busca);
-            List<Conta> contas = contaService.buscarContaPeloNumero(numeroConta);
-            mostrarContasListagem(contas);
-        } catch (NumberFormatException e) {
-            List<Conta> contas = contaService.listarContas();
-            mostrarContasListagem(contas);
-        }
        
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
     private void botaoSacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSacarActionPerformed
-       try {
-         Integer idConta = Integer.parseInt(campoID.getText());
-         Double valor = Double.parseDouble(campoValorMov.getText());
-         Conta conta = contaService.sacar(idConta, valor);    
-         configurarTelaMovimento(conta);
-       } catch(NumberFormatException e) {
-         JOptionPane.showMessageDialog(null, "Valor invalido");
-       } catch(SemSaldoException e) {
-           JOptionPane.showMessageDialog(null, e.getMessage());
-       }
+       
     }//GEN-LAST:event_botaoSacarActionPerformed
 
     private void abaContasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_abaContasFocusGained
@@ -306,14 +288,7 @@ public class Janela extends javax.swing.JFrame {
     }//GEN-LAST:event_abaContasFocusGained
 
     private void botaoDepositarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDepositarActionPerformed
-         try {
-         Integer idConta = Integer.parseInt(campoID.getText());
-         Double valor = Double.parseDouble(campoValorMov.getText());
-         Conta conta = contaService.deposito(idConta, valor);    
-         configurarTelaMovimento(conta);
-       } catch(NumberFormatException e) {
-         JOptionPane.showMessageDialog(null, "Valor invalido");
-       }
+       
     }//GEN-LAST:event_botaoDepositarActionPerformed
 
     private void tabPanelComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabPanelComponentShown
@@ -321,30 +296,12 @@ public class Janela extends javax.swing.JFrame {
     }//GEN-LAST:event_tabPanelComponentShown
 
     private void abaContasComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_abaContasComponentShown
-        List<Conta> contas = contaService.listarContas();
-        mostrarContasListagem(contas);
+        
     }//GEN-LAST:event_abaContasComponentShown
 
     
     private void mostrarContasListagem(List<Conta> contas) {
-        DefaultListModel<Conta> model = new DefaultListModel<>();
-        JList<Conta> jList = new JList(model);
-        for(Conta conta : contas) {
-            model.addElement(conta);
-        }
-        painelResultados.setViewportView(jList);
-        painelResultados.setVisible(true);
-        jList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Conta conta = jList.getSelectedValue();
-                configurarTelaMovimento(conta);
-                tabPanel.setSelectedComponent(abaMovimentos);
-     
-            }
-            
-            
-        });
+        
     }
     
     private void abaContasComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_abaContasComponentAdded
@@ -352,20 +309,11 @@ public class Janela extends javax.swing.JFrame {
     }//GEN-LAST:event_abaContasComponentAdded
 
     private void botaoExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExtratoActionPerformed
-        Integer idConta = Integer.parseInt(campoID.getText());
-        Extrato extrato = contaService.obterExtratoConta(idConta);
-        JOptionPane.showMessageDialog(null, extrato.toString());
+        
     }//GEN-LAST:event_botaoExtratoActionPerformed
 
     private void configurarTelaMovimento(Conta conta) {
-        campoID.setText(conta.getId() + "");
-        campoBanco.setText(conta.getBanco());
-        campoNum.setText(conta.getNumero() + "");
-        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(); 
-        campoSaldo.setText(numberFormat.format(conta.getSaldo()));
-
-        Pessoa p = contaService.obterPessoaPelaConta(conta.getId());
-        campoNome.setText(p.getNome());
+        
                 
     } 
 

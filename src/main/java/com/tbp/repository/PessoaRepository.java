@@ -5,9 +5,9 @@ import com.tbp.modelo.Pessoa;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface PessoaRepository extends CrudRepository<Pessoa, Integer>{
+
+public interface PessoaRepository {
     
-   Pessoa findByConta(Conta conta);
+ 
     
 }
