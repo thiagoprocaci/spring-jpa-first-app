@@ -2,6 +2,7 @@ package com.tbp.visao;
 
 import com.tbp.modelo.*;
 import com.tbp.repository.*;
+import com.tbp.service.PizzaService;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -17,12 +18,12 @@ import org.springframework.stereotype.Component;
 public class Janela extends javax.swing.JFrame {
     
     
+   private PizzaService pizzaService;
+        
+           
     @Autowired
-    private EmpresaRepository empresaRepository;
-    @Autowired
-    private FuncionarioRepository funcionarioRepository;
-    
-    public Janela() {
+    public Janela( PizzaService pizzaService) {
+        this.pizzaService = pizzaService;
         initComponents();  
     }
     
@@ -41,9 +42,11 @@ public class Janela extends javax.swing.JFrame {
         abaCadastroEmpresa = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        nomeEmpresa = new javax.swing.JTextField();
-        cnpjEmpresa = new javax.swing.JTextField();
-        botaoSalvarEmpresa = new javax.swing.JButton();
+        nomePizza = new javax.swing.JTextField();
+        precoPizza = new javax.swing.JTextField();
+        botaoSalvarPizza = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        ingredientesPizza = new javax.swing.JTextField();
         abaCadastroFuncionario = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -81,26 +84,34 @@ public class Janela extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("CNPJ:");
+        jLabel1.setText("Ingredientes");
 
         jLabel2.setText("Nome:");
 
-        nomeEmpresa.addActionListener(new java.awt.event.ActionListener() {
+        nomePizza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomeEmpresaActionPerformed(evt);
+                nomePizzaActionPerformed(evt);
             }
         });
 
-        cnpjEmpresa.addActionListener(new java.awt.event.ActionListener() {
+        precoPizza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cnpjEmpresaActionPerformed(evt);
+                precoPizzaActionPerformed(evt);
             }
         });
 
-        botaoSalvarEmpresa.setText("Salvar");
-        botaoSalvarEmpresa.addActionListener(new java.awt.event.ActionListener() {
+        botaoSalvarPizza.setText("Salvar");
+        botaoSalvarPizza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSalvarEmpresaActionPerformed(evt);
+                botaoSalvarPizzaActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setText("Preço");
+
+        ingredientesPizza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ingredientesPizzaActionPerformed(evt);
             }
         });
 
@@ -110,18 +121,23 @@ public class Janela extends javax.swing.JFrame {
             abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(abaCadastroEmpresaLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addGroup(abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
                 .addGroup(abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cnpjEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(295, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, abaCadastroEmpresaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botaoSalvarEmpresa)
-                .addGap(80, 80, 80))
+                    .addGroup(abaCadastroEmpresaLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ingredientesPizza, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                        .addComponent(botaoSalvarPizza)
+                        .addGap(80, 80, 80))
+                    .addGroup(abaCadastroEmpresaLayout.createSequentialGroup()
+                        .addGroup(abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel13))
+                        .addGap(47, 47, 47)
+                        .addGroup(abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(precoPizza, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nomePizza, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         abaCadastroEmpresaLayout.setVerticalGroup(
             abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,17 +145,24 @@ public class Janela extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(nomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nomePizza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cnpjEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addComponent(botaoSalvarEmpresa)
+                    .addComponent(precoPizza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13))
+                .addGroup(abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(abaCadastroEmpresaLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(botaoSalvarPizza))
+                    .addGroup(abaCadastroEmpresaLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(abaCadastroEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(ingredientesPizza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(138, Short.MAX_VALUE))
         );
 
-        tabPanel.addTab("Cadastro Empresa", abaCadastroEmpresa);
+        tabPanel.addTab("Cadastro Pizza", abaCadastroEmpresa);
 
         jLabel3.setText("Nome:");
 
@@ -390,17 +413,29 @@ public class Janela extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_comboCadastrarEmpresaActionPerformed
 
-    private void botaoSalvarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarEmpresaActionPerformed
-        // TODO implementar o salvar empresa
-    }//GEN-LAST:event_botaoSalvarEmpresaActionPerformed
+    private void botaoSalvarPizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarPizzaActionPerformed
+        String nome = nomePizza.getText();
+        Double preco = Double.parseDouble(precoPizza.getText());
+        String[] ingredientes = ingredientesPizza.getText().split(";");
+        List<Composicao> composicaoList = pizzaService.salvarPizza(nome, preco, ingredientes);
+        StringBuffer mensagem = new StringBuffer();
+        mensagem.append(composicaoList.get(0).getPizza().getNome());
+        mensagem.append("\n");
+        for(Composicao c : composicaoList) {
+            mensagem.append(c.getIngrediente().getNome());
+            mensagem.append("\n");
+                    
+        }
+        JOptionPane.showMessageDialog(null, mensagem);
+    }//GEN-LAST:event_botaoSalvarPizzaActionPerformed
 
-    private void cnpjEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cnpjEmpresaActionPerformed
+    private void precoPizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precoPizzaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cnpjEmpresaActionPerformed
+    }//GEN-LAST:event_precoPizzaActionPerformed
 
-    private void nomeEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeEmpresaActionPerformed
+    private void nomePizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomePizzaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nomeEmpresaActionPerformed
+    }//GEN-LAST:event_nomePizzaActionPerformed
 
     private void campoBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoBuscaActionPerformed
         // TODO add your handling code here:
@@ -423,6 +458,10 @@ public class Janela extends javax.swing.JFrame {
         // implementar o remover funcionario
     }//GEN-LAST:event_botaoRemoverFuncionarioActionPerformed
 
+    private void ingredientesPizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingredientesPizzaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ingredientesPizzaActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -433,8 +472,8 @@ public class Janela extends javax.swing.JFrame {
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoEditarFuncionario;
     private javax.swing.JButton botaoRemoverFuncionario;
-    private javax.swing.JButton botaoSalvarEmpresa;
     private javax.swing.JButton botaoSalvarFuncionario;
+    private javax.swing.JButton botaoSalvarPizza;
     private javax.swing.JTextField campoBusca;
     private javax.swing.JTextField campoCadastrarCpf;
     private javax.swing.JTextField campoCadastrarNome;
@@ -443,13 +482,14 @@ public class Janela extends javax.swing.JFrame {
     private javax.swing.JTextField campoEditarId;
     private javax.swing.JTextField campoEditarNome;
     private javax.swing.JTextField campoEditarSalario;
-    private javax.swing.JTextField cnpjEmpresa;
-    private javax.swing.JComboBox<Empresa> comboCadastrarEmpresa;
-    private javax.swing.JComboBox<Empresa> comboEditarEmpresa;
+    private javax.swing.JComboBox<String> comboCadastrarEmpresa;
+    private javax.swing.JComboBox<String> comboEditarEmpresa;
+    private javax.swing.JTextField ingredientesPizza;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -458,8 +498,9 @@ public class Janela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField nomeEmpresa;
+    private javax.swing.JTextField nomePizza;
     private javax.swing.JScrollPane painelResultados;
+    private javax.swing.JTextField precoPizza;
     private javax.swing.JTabbedPane tabPanel;
     // End of variables declaration//GEN-END:variables
 }
