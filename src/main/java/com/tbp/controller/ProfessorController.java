@@ -41,7 +41,7 @@ public class ProfessorController {
         // depois configuramos a disciplina
         if(idDisciplinas != null) {
             for(Long idDisciplina : idDisciplinas) {
-                Disciplina disciplina = disciplinaRepository.findOne(idDisciplina);
+                Disciplina disciplina = disciplinaRepository.findById(idDisciplina).get();
                 if(disciplina != null) {
                     professor.getDisciplinas().add(disciplina);
                 }

@@ -46,9 +46,9 @@ public class AlocacaoController {
                          @RequestParam("idDisciplina") Long idDisciplina,
                          @RequestParam("horario") String horario
                          ) {
-        Turma turma = turmaRepository.findOne(idTurma);
-        Professor professor = professorRepository.findOne(idProfessor);
-        Disciplina disciplina = disciplinaRepository.findOne(idDisciplina);
+        Turma turma = turmaRepository.findById(idTurma).get();
+        Professor professor = professorRepository.findById(idProfessor).get();
+        Disciplina disciplina = disciplinaRepository.findById(idDisciplina).get();
         Alocacao alocacao = new Alocacao();
         alocacao.setHorario(horario);
         alocacao.setProfessor(professor);

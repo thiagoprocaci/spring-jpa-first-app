@@ -34,7 +34,7 @@ public class AlunoController {
                          @RequestParam(value = "idTurma", required = false) Long idTurma) {
         Turma turma = null;
         if(idTurma != null) {
-            turma = turmaRepository.findOne(idTurma);
+            turma = turmaRepository.findById(idTurma).get();
         }
         Aluno aluno = new Aluno();
         aluno.setTurma(turma);
