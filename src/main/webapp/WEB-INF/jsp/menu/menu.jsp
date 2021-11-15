@@ -10,11 +10,11 @@
                 Cadastros
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="<%=request.getContextPath()%>/turma/create">Turma</a>
-                <a class="dropdown-item" href="<%=request.getContextPath()%>/disciplina/create">Disciplina</a>
-                <a class="dropdown-item" href="<%=request.getContextPath()%>/aluno/create">Aluno</a>
-                <a class="dropdown-item" href="<%=request.getContextPath()%>/professor/create">Professor</a>
-                <a class="dropdown-item" href="<%=request.getContextPath()%>/alocacao/create">Alocação</a>
+                <a class="dropdown-item" href="<%=request.getContextPath()%>/medico/cadastro">Medico</a>
+                <a class="dropdown-item" href="<%=request.getContextPath()%>/paciente/cadastro">Paciente</a>
+                <a class="dropdown-item" href="<%=request.getContextPath()%>/exame/cadastro">Exame</a>
+                <a class="dropdown-item" href="<%=request.getContextPath()%>/agendamento/cadastro">Agendamento</a>
+
             </div>
         </li>
         <li class="nav-item dropdown">
@@ -22,10 +22,7 @@
                 Listagens
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                <a class="dropdown-item" href="<%=request.getContextPath()%>/turma/list">Turma</a>
-                <a class="dropdown-item" href="<%=request.getContextPath()%>/disciplina/list">Disciplina</a>
-                <a class="dropdown-item" href="<%=request.getContextPath()%>/aluno/list">Aluno</a>
-                <a class="dropdown-item" href="<%=request.getContextPath()%>/professor/list">Professor</a>
+                <a class="dropdown-item" href="<%=request.getContextPath()%>/agendamento/list">Agendamento</a>
 
             </div>
         </li>

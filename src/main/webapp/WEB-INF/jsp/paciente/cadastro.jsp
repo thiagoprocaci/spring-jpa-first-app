@@ -5,7 +5,7 @@
 
 <html>
 <head>
-    <title>Cadastro de Aluno</title>
+    <title>Cadastro de Medico</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -15,27 +15,25 @@
 <jsp:include page="../menu/menu.jsp" />
 <div class="container" style="margin-top: 20px">
     <div>
-        <h2>Cadastro de Aluno</h2>
+        <h2>Cadastro de Paciente</h2>
+        <br>
+        <h3>${mensagem}</h3>
     </div>
     <div>
-        <form method="post" action="<%=request.getContextPath()%>/aluno/create">
+        <form method="post" action="<%=request.getContextPath()%>/paciente/cadastro">
             <div class="form-group">
                 <label for="nome">Nome</label>
-                <input type="text" class="form-control" name="nome" id="nome"  placeholder="Entre com o nome do aluno">
+                <input type="text" class="form-control" name="nome" id="nome"  placeholder="Entre com o nome do paciente">
             </div>
             <div class="form-group">
-                <label for="matricula">Matricula</label>
-                <input type="text" class="form-control" name="matricula" id="matricula"  placeholder="Entre com a matricula do aluno">
+                <label for="cpf">CPF</label>
+                <input type="text" class="form-control" name="cpf" id="cpf"  placeholder="Entre com o cpf do paciente">
             </div>
             <div class="form-group">
-                <label for="idTurma">Turma</label>
-                <select class="form-control" name="idTurma" id="idTurma">
-                    <c:forEach var="turma" items="${turmaList}">
-                        <option value="${turma.id}">${turma.descricao}</option>
-                    </c:forEach>
-                </select>
+                <label for="planoSaude">Plano de Saude</label>
+                <input type="text" class="form-control" name="planoSaude" id="planoSaude"  placeholder="Entre com o plano do paciente">
+            </div>
 
-            </div>
             <button type="submit" class="btn btn-primary">Salvar</button>
         </form>
     </div>

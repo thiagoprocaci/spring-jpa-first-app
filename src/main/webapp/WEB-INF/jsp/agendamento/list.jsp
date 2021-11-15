@@ -5,7 +5,7 @@
 
 <html>
 <head>
-    <title>Listar Disciplinas</title>
+    <title>Listar Agendamentos</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -15,7 +15,7 @@
 <jsp:include page="../menu/menu.jsp" />
 <div class="container" style="margin-top: 20px">
     <div>
-        <h2>Listagem das Disciplinas</h2>
+        <h2>Listagem de Agendamentos</h2>
     </div>
     <div>
         <table class="table">
@@ -25,16 +25,34 @@
                     ID
                 </th>
                 <th>
-                    Nome
+                    Paciente
+                </th>
+                <th>
+                    Medico
+                </th>
+                <th>
+                    Exame
+                </th>
+                <th>
+                    Horario
                 </th>
             </tr>
-            <c:forEach var="disciplina" items="${disciplinaList}">
+            <c:forEach var="agendamento" items="${agendamentoList}">
                 <tr>
                     <td>
-                            ${disciplina.id}
+                            ${agendamento.id}
                     </td>
                     <td>
-                            ${disciplina.nome}
+                            ${agendamento.paciente.nome}
+                    </td>
+                    <td>
+                            ${agendamento.medico.nome}
+                    </td>
+                    <td>
+                            ${agendamento.exame.nome}
+                    </td>
+                    <td>
+                            ${agendamento.horario}
                     </td>
                 </tr>
             </c:forEach>
