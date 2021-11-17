@@ -33,6 +33,18 @@
                 <label for="planoSaude">Plano de Saude</label>
                 <input type="text" class="form-control" name="planoSaude" id="planoSaude"  placeholder="Entre com o plano do paciente">
             </div>
+            <div class="form-group">
+                <label for="cep">CEP</label>
+                <input type="text" class="form-control" name="cep" id="cep"  placeholder="Entre com o cep do paciente">
+            </div>
+            <div class="form-group">
+                <label for="complemento">Complemento Endereço</label>
+                <input type="text" class="form-control" name="complemento" id="complemento"  placeholder="Entre com o complemento deo endereco do paciente">
+            </div>
+            <div class="form-group">
+                <label for="numero">Número do Endereço</label>
+                <input type="text" class="form-control" name="numero" id="numero"  placeholder="Entre com o numero deo endereco do paciente">
+            </div>
 
             <button type="submit" class="btn btn-primary">Salvar</button>
         </form>

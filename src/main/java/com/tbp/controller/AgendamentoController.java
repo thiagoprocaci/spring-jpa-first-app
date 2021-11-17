@@ -53,9 +53,9 @@ public class AgendamentoController {
             @RequestParam("horario") String horario,
             Map<String, Object> model) {
 
-        Medico medico = medicoRepository.findOne(idMedico);
-        Paciente paciente = pacienteRepository.findOne(idPaciente);
-        Exame exame = exameRepository.findOne(idExame);
+        Medico medico = medicoRepository.findById(idMedico).get();
+        Paciente paciente = pacienteRepository.findById(idPaciente).get();
+        Exame exame = exameRepository.findById(idExame).get();
 
         Agendamento agendamento = new Agendamento();
         agendamento.setExame(exame);
